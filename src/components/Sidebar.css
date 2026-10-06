@@ -29,3 +29,16 @@
   margin: 15;
   
 }
+.sidebar-section.active {
+  background: #444;
+  border-left: 3px solid green;
+}
+.sidebar-section {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s, border-left-color 0.3s;
+}

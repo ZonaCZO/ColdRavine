@@ -1,5 +1,6 @@
 
 import './Sidebar.css'
+import { NavLink } from "react-router-dom";
 
 function Sidebar() {   
     const menuItems = [
@@ -26,15 +27,11 @@ function Sidebar() {
        
       </section>
       <section id="sidebar-sections">
-            
-        
           {menuItems.map((item) => (
-            <button key={item.name} className="sidebar-section">
+            <NavLink key={item.name} to={`/${item.name.toLowerCase().replace(' ', '-')}`} className="{({ isActive }) => (isActive ? 'sidebar-section active' : 'sidebar-section')}">
               {item.icon} {item.name}
-            </button>
-        
+            </NavLink>
           ))}
-        
       </section>
     </aside>
     )
