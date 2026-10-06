@@ -1,0 +1,31 @@
+#sidebar {
+    width: 260px;
+    flex-shrink: 0;
+    text-align: left;
+    background-color: var(--sidebar-bg);
+    border-right: 1px solid var(--border);
+    padding: 16px;
+    gap: 8px;
+    border-radius: 0px 0px 0px 0px;
+    :hover {
+        background-color: var(--sidebar-hover-bg);
+    }
+    transition: background-color 0.3s;
+    font-size: 14px;
+    font-weight: 400;
+    letter-spacing: 0.5px;
+}
+.sidebar-h2 {
+  font-size: 5px;
+  font-weight: 600;
+  color: var(--text-h);
+  text-transform: uppercase;
+  margin: 0;
+  
+}
+.tech-text {
+  font-size: 12 px;
+  color: green;
+  margin: 15;
+  
+}
