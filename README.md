@@ -1,75 +1,279 @@
-# React + TypeScript + Vite
+# Military Command System
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Учебное веб-приложение для управления условными подразделениями, личным составом, операциями и разведывательными отчётами. Проект помогает освоить разработку интерфейсов на React и TypeScript, работу с маршрутизацией, формами и связанными данными, а затем — интеграцию с backend.
 
-Currently, two official plugins are available:
+Приложение развивается поэтапно: сначала frontend, затем REST API, база данных, аутентификация и развёртывание. Оно предназначено для учебных сценариев и демонстрационных данных.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Технологии
 
-## React Compiler
+| Технология | Назначение | Статус |
+| --- | --- | --- |
+| React | Компоненты и пользовательский интерфейс | Текущий стек |
+| TypeScript | Типизация компонентов, данных и функций | Текущий стек |
+| Vite | Среда разработки и сборка frontend | Текущий стек |
+| React Router | Навигация между страницами | Текущий стек |
+| CSS | Стили, оформление и адаптивная вёрстка | Текущий стек |
+| Git / GitHub | Контроль версий и хранение репозитория | Текущий набор инструментов |
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+Точные версии зависимостей следует смотреть в `package.json` и lock-файле репозитория.
 
-## Expanding the ESLint configuration
+## Текущий статус
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+| Область | Состояние |
+| --- | --- |
+| Dashboard | Frontend реализован |
+| Operations | Frontend реализован |
+| Personnel | В разработке |
+| Units | В разработке |
+| Intelligence | Запланирован |
+| Tactical Map | Запланирован |
+| NotFound | Предусмотрен структурой приложения; реализацию нужно подтвердить |
+| Backend и REST API | Запланированы |
+| PostgreSQL | Запланирован |
+| Аутентификация и права доступа | Запланированы |
+| Deploy | Запланирован |
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+Статус отражает описание проекта. Реализация frontend не означает наличие серверного хранения, готового API или завершённость всех CRUD-сценариев.
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+## Страницы и маршруты
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+| Модуль | Маршрут | Назначение |
+| --- | --- | --- |
+| Dashboard | `/dashboard` | Сводная статистика, активные операции, последние события и состояние системы |
+| Operations | `/operations` | Список операций, поиск, фильтрация и управление операциями |
+| Operation Details | `/operations/:id` | Информация о выбранной операции и назначенных подразделениях |
+| Personnel | `/personnel` | Список личного состава, поиск и фильтры |
+| Soldier Dossier | `/personnel/:id` | Досье: основные сведения, звание, подразделение, статус и история службы |
+| Units | `/units` | Список подразделений, поиск, фильтры и управление подразделениями |
+| Unit Details | `/units/:id` | Командир, состав, статус, назначенные операции и активность |
+| Intelligence | `/intelligence` | Разведывательные отчёты, поиск, фильтры и уровни угроз |
+| Report Details | `/intelligence/:id` | Содержание отчёта, связанные объекты и материалы |
+| Tactical Map | `/map` | Демонстрационная карта с маркерами объектов и панелью выбранного объекта |
+| NotFound | `*` | Страница для неизвестных адресов |
 
+Это целевая схема маршрутов. Страницы деталей и возможности запланированных модулей могут появляться постепенно. Для `/` предполагается перенаправление на `/dashboard`.
+
+## Предполагаемая архитектура
+
+Frontend строится вокруг отдельных предметных модулей и переиспользуемых компонентов:
+
+```text
+Браузер
+  └─ React + React Router
+      ├─ Страницы и компоненты модулей
+      ├─ Состояние интерфейса и проверка форм
+      └─ Слой доступа к данным
+          ├─ Демонстрационные данные — на этапе frontend
+          └─ REST API — после подключения backend
+              └─ Express + TypeScript
+                  ├─ Маршруты и middleware
+                  ├─ Проверка входных данных и авторизация
+                  ├─ Сервисы предметной логики
+                  └─ Слой доступа к PostgreSQL
 ```
 
-You can also install [eslint-plugin-react-x](https://npmx.dev/package/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://npmx.dev/package/eslint-plugin-react-dom) for React-specific lint rules:
+- **Страницы** организуют экран, загрузку данных и взаимодействие компонентов.
+- **Компоненты** отображают карточки, формы, фильтры и общие элементы интерфейса.
+- **Типы** описывают сущности и контракты данных.
+- **Слой API** изолирует сетевые запросы от интерфейса.
+- **Backend** проверяет запросы, применяет права доступа и сохраняет данные.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+На первом этапе достаточно локального состояния React и передачи данных через props. Общий механизм состояния стоит добавлять по мере появления данных, используемых несколькими страницами. Dashboard должен получать сводные показатели из тех же источников, что и остальные модули.
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## Рекомендуемая структура папок
 
+Ниже приведена предполагаемая структура, а не подтверждённое дерево текущего репозитория:
+
+```text
+military-command-system/
+├─ public/                       # Статические файлы
+├─ src/
+│  ├─ assets/                    # Изображения и другие ресурсы
+│  ├─ components/
+│  │  ├─ common/                 # Кнопки, модальные окна, empty state
+│  │  ├─ layout/                 # Общая оболочка, sidebar, header
+│  │  ├─ operations/             # Карточки, формы и фильтры операций
+│  │  ├─ personnel/              # Компоненты личного состава
+│  │  ├─ units/                  # Компоненты подразделений
+│  │  ├─ intelligence/           # Компоненты отчётов
+│  │  └─ map/                    # Компоненты карты
+│  ├─ pages/
+│  │  ├─ Dashboard.tsx
+│  │  ├─ Operations.tsx
+│  │  ├─ OperationDetails.tsx
+│  │  ├─ Personnel.tsx
+│  │  ├─ SoldierDossier.tsx
+│  │  ├─ Units.tsx
+│  │  ├─ UnitDetails.tsx
+│  │  ├─ Intelligence.tsx
+│  │  ├─ ReportDetails.tsx
+│  │  ├─ TacticalMap.tsx
+│  │  └─ NotFound.tsx
+│  ├─ routes/                    # Конфигурация маршрутов
+│  ├─ types/                     # Типы предметных сущностей
+│  ├─ data/                      # Демонстрационные данные
+│  ├─ services/                  # Будущий клиент REST API
+│  ├─ hooks/                     # Переиспользуемые React hooks
+│  ├─ utils/                     # Вспомогательные функции
+│  ├─ styles/                    # Общие стили и стили модулей
+│  ├─ App.tsx
+│  └─ main.tsx
+├─ index.html
+├─ package.json
+├─ package-lock.json             # При использовании npm
+├─ tsconfig.json
+├─ vite.config.ts
+└─ README.md
 ```
+
+Backend можно разместить в отдельном репозитории или добавить каталог `server/`. Решение о монорепозитории пока не зафиксировано.
+
+## Данные и сущности
+
+Предлагаемая модель данных:
+
+| Сущность | Основные поля | Связи |
+| --- | --- | --- |
+| Operation | `id`, `name`, `description`, `status`, даты | Назначенные подразделения, связанные отчёты |
+| Soldier | `id`, `name`, `rank`, `status`, `unitId` | Подразделение, записи истории службы |
+| Unit | `id`, `name`, `type`, `status`, `commanderId` | Личный состав, командир, операции |
+| IntelligenceReport | `id`, `title`, `content`, `threatLevel`, `createdAt` | Операция, автор, вложения |
+| MapMarker | `id`, `coordinates`, `entityType`, `entityId` | Объект, отображаемый на карте |
+| ActivityEvent | `id`, `eventType`, `entityId`, `createdAt` | История изменений объектов |
+| User | `id`, `displayName`, `role` | Будущая аутентификация и права доступа |
+
+Названия и поля предварительные; окончательные типы и схема базы данных будут уточняться при реализации.
+
+Предполагаемые правила связей:
+
+- Один военнослужащий относится к одному подразделению либо временно не назначен.
+- Подразделение содержит несколько военнослужащих; командир задаётся ссылкой на запись личного состава.
+- Операция может включать несколько подразделений. Историю назначений можно хранить через отдельную сущность `OperationUnit`.
+- Численность подразделения рассчитывается по составу, чтобы избежать расхождений с вручную сохранённым значением.
+- Маркер карты ссылается на сущность и не дублирует её основные сведения.
+- Dashboard показывает вычисляемые показатели, а не отдельные копии данных модулей.
+
+Для разработки следует использовать вымышленные данные. После подключения backend постоянным источником данных станет PostgreSQL.
+
+## Локальный запуск
+
+### Требования
+
+- Node.js версии, совместимой с установленной версией Vite; предпочтительно поддерживаемый LTS-релиз.
+- npm и Git.
+- Доступ к репозиторию проекта.
+
+### Установка и запуск
+
+Замените URL ниже адресом своего репозитория:
+
+```bash
+git clone <repository-url>
+cd military-command-system
+npm install
+npm run dev
+```
+
+Откройте адрес, который выведет Vite в терминале. Обычно это `http://localhost:5173`, но порт может отличаться.
+
+Если в репозитории есть актуальный `package-lock.json`, для воспроизводимой установки можно использовать `npm ci` вместо `npm install`.
+
+### Сборка и просмотр
+
+```bash
+npm run build
+npm run preview
+```
+
+Команды предполагают стандартные scripts Vite в `package.json`. Перед использованием проверьте их наличие. `preview` предназначен для локального просмотра сборки.
+
+При будущем подключении API можно добавить `.env.local`:
+
+```dotenv
+VITE_API_BASE_URL=http://localhost:3000/api
+```
+
+Это предполагаемая настройка: она заработает после реализации клиента API. Переменные `VITE_*` доступны в браузере, поэтому в них нельзя хранить пароли, приватные ключи и другие секреты. Пример настроек без секретов можно сохранить в `.env.example`.
+
+## Git workflow
+
+Рекомендуемый процесс работы:
+
+1. Обновить локальную ветку `main`.
+2. Создать отдельную ветку для одной задачи.
+3. Внести изменения и проверить затронутые сценарии интерфейса.
+4. Проверить сборку и доступные проверки проекта.
+5. Создать понятные коммиты, отправить ветку и открыть Pull Request.
+6. После проверки объединить изменения в `main`.
+
+```bash
+git switch main
+git pull --ff-only
+git switch -c feat/units-page
+
+# После внесения и проверки изменений:
+git add src/
+git commit -m "feat: add units page"
+git push -u origin feat/units-page
+```
+
+Примеры названий веток: `feat/personnel-page`, `fix/operation-filter`, `docs/update-readme`. Для сообщений коммитов можно использовать префиксы `feat:`, `fix:`, `refactor:`, `docs:`.
+
+Перед коммитом проверяйте список изменений. Не добавляйте `node_modules/`, `dist/`, локальные `.env` с секретами и служебные файлы редактора; правила исключения должны находиться в `.gitignore`.
+
+## Roadmap
+
+### Этап 1 — Frontend
+
+- [x] Реализовать frontend Dashboard.
+- [x] Реализовать frontend Operations.
+- [ ] Завершить Personnel и досье военнослужащего.
+- [ ] Завершить Units и страницу подразделения.
+- [ ] Реализовать Intelligence и просмотр отчёта.
+- [ ] Реализовать демонстрационную Tactical Map.
+- [ ] Завершить маршруты деталей и NotFound.
+- [ ] Унифицировать формы, фильтры, поиск и состояния пустых списков.
+- [ ] Проверить адаптивность, клавиатурную навигацию и доступность форм.
+
+### Этап 2 — Backend и данные
+
+- [ ] Создать сервер на Node.js + Express + TypeScript.
+- [ ] Спроектировать PostgreSQL, связи и миграции.
+- [ ] Реализовать REST API для основных сущностей.
+- [ ] Добавить серверную проверку данных и единый формат ошибок.
+- [ ] Подключить frontend к API, добавить состояния загрузки и ошибок.
+- [ ] Добавить проверки ключевых сценариев и интеграции API.
+
+### Этап 3 — Доступ и публикация
+
+- [ ] Реализовать аутентификацию.
+- [ ] Определить роли и проверять права доступа на сервере.
+- [ ] Настроить окружения разработки и production.
+- [ ] Настроить автоматические проверки и сборку в GitHub.
+- [ ] Развернуть frontend, backend и базу данных.
+- [ ] Настроить журналирование и резервное копирование базы данных.
+
+## Будущий backend stack
+
+| Технология | Планируемое назначение |
+| --- | --- |
+| Node.js | Выполнение серверного приложения |
+| Express | HTTP-маршруты, middleware и REST API |
+| TypeScript | Типизация серверного кода |
+| PostgreSQL | Постоянное хранение данных и связей |
+
+Предлагаемые группы API: `/api/operations`, `/api/personnel`, `/api/units`, `/api/intelligence`. Контракты запросов, пагинация, фильтрация, способ аутентификации, ORM или SQL-клиент будут выбраны при разработке backend.
+
+Секреты подключения к базе и настройки аутентификации должны храниться в серверном окружении. Доступ к PostgreSQL выполняется через backend.
+
+## Возможный desktop вариант
+
+В будущем веб-интерфейс можно адаптировать для desktop-приложения с помощью **Electron** или **Tauri**. Выбор потребует оценки размера приложения, интеграции с системой, обновлений и способа подключения к API. Tauri также потребует работы с Rust-инструментами.
+
+Electron и Tauri сейчас не входят в стек проекта. Desktop-версия рассматривается как отдельный будущий вариант развития после стабилизации веб-приложения.
+
+## Лицензия
+
+**TODO: выбрать лицензию и добавить файл `LICENSE`.**
+
+Лицензия пока не определена. После выбора укажите её название и условия использования в этом разделе.
