@@ -1,5 +1,8 @@
-import StatCard from "../components/StatCard";
-import './Dashboard.css'
+import RecentActivity from "../components/dashboard/RecentActivity";
+import StatCard from "../components/dashboard/StatCard";
+import ActiveOperations from "../components/dashboard/ActiveOperations";
+import './styles/Dashboard.css'
+import SystemStatus from "../components/dashboard/SystemStatus";
 
 
 function Dashboard() {
@@ -27,50 +30,23 @@ function Dashboard() {
 
   <div className="stats-grid">
     {stats.map((stat, index) => (
-      <StatCard
-        key={index}
-        title={stat.title}
-        value={stat.value}
-      />
+      <StatCard key={index} title={stat.title} value={stat.value} />
     ))}
   </div>
 
   <div className="dashboard-grid">
-    <section className="dashboard-panel">
-      <h2>Recent Activity</h2>
-
       {recentActivity.map((activity, index) => (
-        <div key={index} className="activity-card">
-          <h3>{activity.title}</h3>
-          <p>{activity.time}</p>
-        </div>
+        <RecentActivity key={index} activities={[activity]} />
       ))}
-    </section>
-
-    <section className="dashboard-panel">
-      <h2>Active Operations</h2>
 
       {activeOperations.map((operation, index) => (
-        <div key={index} className="operation-card">
-          <h3>{operation.title}</h3>
-          <p>Status: {operation.status}</p>
-          <p className={`status-badge ${operation.priority.toLowerCase()}`}>
-              {operation.priority}
-          </p>
-        </div>
+        <ActiveOperations key={index} operations={[operation]} />
       ))}
-    </section>
-
-    <section className="dashboard-panel system-panel">
-      <h2>System Status <span className="live-indicator">LIVE</span></h2>
 
       {systemStatus.map((status, index) => (
-        <div key={index} className="system-status-card">
-          <h3>{status.title}</h3>
-          <p>{status.value}</p>
-        </div>
+        <SystemStatus key={index} statuses={[status]} />
       ))}
-    </section>
+
   </div>
 </section>
   )
