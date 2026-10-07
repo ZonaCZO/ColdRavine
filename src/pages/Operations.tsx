@@ -1,6 +1,7 @@
 import { useState } from "react";
+import OperationCard from "../components/OperationCard";
 
-type Operation = {
+export type Operation = {
   id: number;
   name: string;
   status: "Planned" | "In Progress" | "Completed";
@@ -11,9 +12,9 @@ type Operation = {
 function Operations() {
     const [operations, setOperations] = useState<Operation[]>([
       
-    { id: 1, name: "Operation Alpha", status: "In Progress", priority: "High" },
-    { id: 2, name: "Operation Bravo", status: "Completed", priority: "Low" },
-    { id: 3, name: "Operation Charlie", status: "Planned", priority: "Medium" },
+ //   { id: 1, name: "Operation Alpha", status: "In Progress", priority: "High" },
+   //  { id: 2, name: "Operation Bravo", status: "Completed", priority: "Low" },
+   //  { id: 3, name: "Operation Charlie", status: "Planned", priority: "Medium" },
   ]);
   const [name, setName] = useState("");
   const [status, setStatus] = useState<Operation["status"]>("Planned");
@@ -98,6 +99,9 @@ function Operations() {
   <button type="submit">Add</button>
 </form>
   )}
+    {operations.length === 0 && (
+  <p>No operations found</p>
+)}
     {operations.map(operation => (
       <div key={operation.id} className="operation-card">
         <h3>{operation.name}</h3>
@@ -109,10 +113,7 @@ function Operations() {
         </button>
         {editingId === operation.id && (
         <div className="operation-controls">
-        <button onClick={() => deleteOperation(operation.id)}>
-          Delete
-        </button>
-
+        <OperationCard operation={operation} onDelete={deleteOperation} />
         <select
   value={operation.status}
   onChange={(e) =>
