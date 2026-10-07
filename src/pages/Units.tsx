@@ -2,13 +2,9 @@ import { useState } from "react";
 import type { Unit } from "../types/Unit";
 import UnitCard from "../components/unit/UnitCard";
 import UnitFilter from "../components/unit/UnitFilter";
+import { units } from "../data/units";
 import "./styles/Units.css";
 
-const units: Unit[] = [
-  { id: 1, name: "Alpha", specialization: "Infantry", status: "Active" },
-  { id: 2, name: "Bravo", specialization: "Medical support", status: "Active" },
-  { id: 3, name: "Charlie", specialization: "Engineering", status: "Reserve" },
-];
 
 function Units() {
   const [search, setSearch] = useState("");

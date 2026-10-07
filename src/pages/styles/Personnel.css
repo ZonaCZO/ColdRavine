@@ -43,10 +43,10 @@
 .personnel-filter-field input { width: 220px; }
 .personnel-filter-field input::placeholder { color: #8390a0; }
 .personnel-button {
-  padding: 9px 14px;
+  padding: 4px 14px;
   border: 1px solid #3b82f6;
   border-radius: 6px;
-  background: #161b22;
+  background: #161b22;;
   color: #7db4ff;
   font-weight: 600;
   cursor: pointer;

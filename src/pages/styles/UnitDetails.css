@@ -1,0 +1,24 @@
+.unit-details-page { width: 100%; padding: 28px 32px; display: flex; flex-direction: column; gap: 20px; background: #15171d; color: #a3b0c2; }
+.unit-details-page * { box-sizing: border-box; }
+.unit-details-page h1 { margin: 0 0 24px; color: #f3f4f6; font-size: clamp(30px, 5vw, 48px); line-height: 1.15; text-align: center; }
+.unit-details-header, .unit-details-panel { min-width: 0; padding: 24px; background: #1b1e24; border: 1px solid #2f333b; border-radius: 10px; }
+.unit-details-header { display: flex; flex-direction: column; align-items: center; gap: 12px; border-top: 3px solid #2dd4bf; text-align: center; }
+.unit-details-emblem { width: 100px; height: 100px; padding: 18px; background: #171c23; color: #2dd4bf; border: 1px solid #2f3a48; border-radius: 16px; }
+.unit-details-page h2 { margin: 0; color: #f3f4f6; font-size: 24px; overflow-wrap: anywhere; }
+.unit-details-page p { margin: 0; }
+.unit-details-status { padding: 5px 12px; border-radius: 6px; background: #171c23; font-size: 14px; }
+.unit-details-status--active { color: #5eead4; }
+.unit-details-status--reserve { color: #7db4ff; }
+.unit-details-panel h2 { font-size: 20px; text-align: left; margin-bottom: 20px; }
+.unit-details-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; margin: 0; text-align: left; }
+.unit-details-grid > div { min-width: 0; padding: 16px; background: #171c23; border: 1px solid #2f3a48; border-radius: 8px; }
+.unit-details-grid dt { font-size: 12px; margin-bottom: 8px; }
+.unit-details-grid dd { margin: 0; color: #dbe4ee; overflow-wrap: anywhere; }
+.unit-details-sections { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
+.unit-details-empty { padding: 16px; background: #171c23; border: 1px dashed #35404d; border-radius: 8px; font-size: 14px; text-align: left; }
+@media (max-width: 800px) { .unit-details-sections { grid-template-columns: 1fr; } }
+@media (max-width: 640px) {
+  .unit-details-page { padding: 20px 16px; }
+  .unit-details-header, .unit-details-panel { padding: 16px; }
+  .unit-details-grid { grid-template-columns: 1fr; }
+}

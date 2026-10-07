@@ -1,4 +1,5 @@
 import type { Soldier } from "../../types/Soldier";
+import { Link } from "react-router-dom";
 
 function PersonnelCard({ soldier }: { soldier: Soldier }) {
   return (
@@ -29,6 +30,9 @@ function PersonnelCard({ soldier }: { soldier: Soldier }) {
           <dd className="personnel-list__value">{soldier.age}</dd>
         </div>
       </dl>
+      <Link className="personnel-button" to={`/personnel/${soldier.id}`}>
+  Open dossier
+</Link>
     </article>
   );
 }
