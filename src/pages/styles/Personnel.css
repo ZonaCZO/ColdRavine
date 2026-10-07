@@ -1,0 +1,100 @@
+.personnel-page {
+  width: 100%;
+  min-height: 100%;
+  padding: 28px 32px;
+  background: #15171d;
+  color: #a3b0c2;
+}
+
+.personnel-page * { box-sizing: border-box; }
+.personnel-page__shell { display: flex; flex-direction: column; gap: 20px; }
+.personnel-header { display: flex; flex-direction: column; gap: 20px; }
+.personnel-header__top { text-align: center; }
+.personnel-header__title {
+  margin: 0 0 24px;
+  color: #f3f4f6;
+  font-size: clamp(32px, 6vw, 56px);
+  line-height: 1.15;
+}
+.personnel-badge { font-size: 14px; color: #a3b0c2; }
+.personnel-filters {
+  margin-top: 16px;
+  padding: 16px;
+  background: #171c23;
+  border: 1px solid #2f3a48;
+  border-left: 3px solid #2dd4bf;
+  border-radius: 8px;
+}
+.personnel-filters__fields { display: flex; flex-wrap: wrap; gap: 12px; align-items: flex-end; }
+.personnel-filter-field { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+.personnel-info__label { font-size: 12px; color: #a3b0c2; text-align: left; }
+.personnel-filter-field input,
+.personnel-filter-field select {
+  max-width: 100%;
+  min-height: 36px;
+  padding: 4px 10px;
+  background: #11161c;
+  color: #dbe4ee;
+  border: 1px solid #35404d;
+  border-radius: 6px;
+  font: inherit;
+  font-size: 14px;
+}
+.personnel-filter-field input { width: 220px; }
+.personnel-filter-field input::placeholder { color: #8390a0; }
+.personnel-button {
+  padding: 9px 14px;
+  border: 1px solid #3b82f6;
+  border-radius: 6px;
+  background: #161b22;
+  color: #7db4ff;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+.personnel-button:hover { transform: translateY(-1px); }
+.personnel-filters :is(input, select, button):focus-visible,
+.personnel-empty button:focus-visible { outline: 2px solid #4b8cff; outline-offset: 3px; }
+.personnel-subtitle { margin: 0; font-size: 14px; text-align: center; }
+.personnel-directory {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
+  gap: 20px;
+  align-items: stretch;
+}
+.personnel-directory-card {
+  min-width: 0;
+  min-height: 320px;
+  padding: 20px;
+  background: #1b1e24;
+  border: 1px solid #2f333b;
+  border-radius: 10px;
+  text-align: center;
+  transition: transform 0.2s ease, border-color 0.2s ease;
+}
+.personnel-directory-card:hover { transform: translateY(-2px); border-color: #46515f; }
+.personnel-directory-card__header { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px; margin-bottom: 12px; }
+.personnel-directory-avatar { width: 80px; height: 80px; flex-shrink: 0; padding: 18px; border-radius: 12px; background: #171c23; color: #2dd4bf; }
+.personnel-name { margin: 0 0 6px; font-size: 22px; overflow-wrap: anywhere; }
+.personnel-role { margin: 0; }
+.personnel-directory-status { display: inline-block; padding: 4px 10px; border-radius: 6px; background: #171c23; font-size: 14px; }
+.personnel-directory-status--active { color: #5eead4; }
+.personnel-directory-status--wounded { color: #ff6b6b; }
+.personnel-directory-status--reserve { color: #7db4ff; }
+.personnel-directory-details { margin: 12px 0 0; }
+.personnel-list__item { display: flex; justify-content: center; flex-wrap: wrap; gap: 6px; margin: 6px 0; }
+.personnel-list__label::after { content: ':'; }
+.personnel-list__value { margin: 0; overflow-wrap: anywhere; }
+.personnel-empty { padding: 24px; border: 1px solid #2f333b; border-radius: 10px; background: #1b1e24; text-align: center; }
+.personnel-section__title { margin: 0 0 12px; font-size: 22px; }
+.personnel-empty .personnel-subtitle { margin-bottom: 16px; }
+@media (max-width: 640px) {
+  .personnel-page { padding: 20px 16px; }
+  .personnel-filter-field { flex: 1 1 100%; }
+  .personnel-filter-field input, .personnel-filter-field select { width: 100%; }
+  .personnel-directory-card { padding: 16px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .personnel-directory-card, .personnel-button { transition: none; }
+  .personnel-directory-card:hover, .personnel-button:hover { transform: none; }
+}
