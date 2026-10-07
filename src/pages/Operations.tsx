@@ -1,7 +1,7 @@
 import { useState } from "react";
-import OperationCard from "../components/OperationCard";
-import OperationForm from "../components/OperationForm";
-import OperationFilter from "../components/OperationFilter";
+import OperationCard from "../components/operation/OperationCard";
+import OperationForm from "../components/operation/OperationForm";
+import OperationFilter from "../components/operation/OperationFilter";
 import type { Operation, StatusFilter, PriorityFilter} from "../types/Operation";
 import "./styles/Operations.css";
 
@@ -18,6 +18,7 @@ function Operations() {
   const [status, setStatus] = useState<Operation["status"]>("Planned");
   const [priority, setPriority] = useState<Operation["priority"]>("Low");
   const [showForm, setShowForm] = useState(false);
+  const [search, setSearch] = useState("");
   const [statusFilter, setStatusFilter] = useState<StatusFilter>("All");
   const [priorityFilter, setPriorityFilter] = useState<PriorityFilter>("All");
   
@@ -31,7 +32,9 @@ function Operations() {
     priorityFilter === "All" ||
     operation.priority === priorityFilter;
 
-  return statusMatches && priorityMatches;
+  const searchMatches = operation.name.toLowerCase().includes(search.toLowerCase());
+
+  return statusMatches && priorityMatches && searchMatches;
 });
 
 // Functions
@@ -107,8 +110,10 @@ function Operations() {
     )}
     {statusFilter && priorityFilter && (
       <OperationFilter
+        search={search}
         status={statusFilter}
         priority={priorityFilter}
+        setSearch={setSearch}
         filterStatus={setStatusFilter}
         filterPriority={setPriorityFilter}
       />

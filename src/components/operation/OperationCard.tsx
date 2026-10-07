@@ -1,5 +1,5 @@
 import { useState } from "react";
-import type { Operation } from "../types/Operation";
+import type { Operation } from "../../types/Operation";
 
 
 type Props = {

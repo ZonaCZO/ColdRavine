@@ -1,5 +1,5 @@
 import type { FormEvent } from "react";
-import type { Operation } from "../types/Operation";
+import type { Operation } from "../../types/Operation";
 
 
 type Props = {
@@ -61,7 +61,7 @@ function OperationForm({
         <option value="High">High</option>
       </select>
 
-      <button type="submit">
+      <button className="btn btn-add" type="submit">
         Add
       </button>
 

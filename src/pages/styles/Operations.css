@@ -44,7 +44,7 @@
   margin: 6px 0;
 }
 
-.operation-form {
+.operation-form, .operation-filter {
   display: flex;
   gap: 12px;
   align-items: center;
@@ -60,7 +60,9 @@
 
 .operation-form input,
 .operation-form select,
-.operation-controls select {
+.operation-controls select,
+.operation-filter input,
+.operation-filter select {
   background: #11161c;
   color: #dbe4ee;
 
@@ -73,7 +75,9 @@
 
 .operation-form input:focus,
 .operation-form select:focus,
-.operation-controls select:focus {
+.operation-controls select:focus,
+.operation-filter input:focus,
+.operation-filter select:focus {
   border-color: #4b8cff;
 }
 
@@ -100,8 +104,8 @@
 .btn-add {
   border: 1px solid #2dd4bf;
   color: #5eead4;
-  padding: 10px 16px;
-  margin-bottom: 24px;
+  padding: 9px 16px;
+  margin-bottom: 0px;
   align-self: center;
 }
 
