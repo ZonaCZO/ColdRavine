@@ -1,0 +1,27 @@
+.soldier-profile-page { width: 100%; padding: 28px 32px; display: flex; flex-direction: column; gap: 20px; background: #15171d; color: #a3b0c2; }
+.soldier-profile-page * { box-sizing: border-box; }
+.soldier-profile-page h1 { margin: 0 0 24px; color: #f3f4f6; font-size: clamp(30px, 5vw, 48px); line-height: 1.15; text-align: center; }
+.soldier-profile-header, .soldier-profile-info { padding: 24px; background: #1b1e24; border: 1px solid #2f333b; border-radius: 10px; }
+.soldier-profile-header { display: flex; flex-direction: column; align-items: center; gap: 12px; border-top: 3px solid #2dd4bf; text-align: center; }
+.soldier-profile-avatar { width: 100px; height: 100px; padding: 24px; background: #171c23; color: #2dd4bf; border: 1px solid #2f3a48; border-radius: 16px; }
+.soldier-profile-page h2 { margin: 0; color: #f3f4f6; font-size: 24px; overflow-wrap: anywhere; }
+.soldier-profile-page p { margin: 0; }
+.soldier-profile-status { padding: 5px 12px; border-radius: 6px; background: #171c23; font-size: 14px; }
+.soldier-profile-status--active { color: #5eead4; }
+.soldier-profile-status--wounded { color: #ff6b6b; }
+.soldier-profile-status--reserve { color: #7db4ff; }
+.soldier-profile-info h2 { font-size: 20px; text-align: left; margin-bottom: 20px; }
+.soldier-profile-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; margin: 0; text-align: left; }
+.soldier-profile-grid > div { min-width: 0; padding: 16px; background: #171c23; border: 1px solid #2f3a48; border-radius: 8px; }
+.soldier-profile-grid dt { font-size: 12px; margin-bottom: 8px; color: #a3b0c2; }
+.soldier-profile-grid dd { margin: 0; color: #dbe4ee; overflow-wrap: anywhere; }
+@media (max-width: 800px) { .soldier-profile-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 480px) {
+  .soldier-profile-page { padding: 20px 16px; }
+  .soldier-profile-header, .soldier-profile-info { padding: 16px; }
+  .soldier-profile-grid { grid-template-columns: 1fr; }
+}
+.soldier-profile-sections { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
+.soldier-profile-sections > section { min-width: 0; }
+.soldier-profile-empty { padding: 16px; border: 1px dashed #35404d; border-radius: 8px; background: #171c23; font-size: 14px; text-align: left; }
+@media (max-width: 800px) { .soldier-profile-sections { grid-template-columns: 1fr; } }
