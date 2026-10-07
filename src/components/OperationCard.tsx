@@ -1,6 +1,7 @@
 import { useState } from "react";
 import type { Operation } from "../types/Operation";
 
+
 type Props = {
   operation: Operation;
   onDelete: (id: number) => void;
@@ -30,7 +31,7 @@ function OperationCard({
       <p>Status: {operation.status}</p>
       <p>Priority: {operation.priority}</p>
 
-      <button onClick={() => setEditing(prev => !prev)}>
+      <button className="btn btn-edit" onClick={() => setEditing(prev => !prev)}>
         {editing ? "Close" : "Edit"}
       </button>
 
@@ -65,7 +66,7 @@ function OperationCard({
             <option value="High">High</option>
           </select>
 
-          <button onClick={() => onDelete(operation.id)}>
+          <button className="btn btn-delete" onClick={() => onDelete(operation.id)}>
             Delete
           </button>
 

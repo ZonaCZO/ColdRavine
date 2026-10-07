@@ -5,3 +5,7 @@ export type Operation = {
   priority: "Low" | "Medium" | "High";
 };
 
+export type StatusFilter = "All" | Operation["status"];
+
+export type PriorityFilter = "All" | Operation["priority"];
+

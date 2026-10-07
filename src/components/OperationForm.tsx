@@ -1,6 +1,7 @@
 import type { FormEvent } from "react";
 import type { Operation } from "../types/Operation";
 
+
 type Props = {
   name: string;
   status: Operation["status"];
@@ -11,6 +12,7 @@ type Props = {
   onPriorityChange: (value: Operation["priority"]) => void;
 
   onSubmit: (event: FormEvent<HTMLFormElement>) => void;
+
 };
 
 function OperationForm({
@@ -20,11 +22,12 @@ function OperationForm({
   onNameChange,
   onStatusChange,
   onPriorityChange,
-  onSubmit
+  onSubmit,
+
 }: Props) {
 
   return (
-    <form onSubmit={onSubmit}>
+    <form className="operation-form" onSubmit={onSubmit}>
 
       <input
         value={name}
@@ -63,6 +66,8 @@ function OperationForm({
       </button>
 
     </form>
+
+    
   );
 }
 

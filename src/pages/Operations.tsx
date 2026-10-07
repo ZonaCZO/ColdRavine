@@ -1,7 +1,9 @@
 import { useState } from "react";
 import OperationCard from "../components/OperationCard";
 import OperationForm from "../components/OperationForm";
-import type { Operation } from "../types/Operation";
+import OperationFilter from "../components/OperationFilter";
+import type { Operation, StatusFilter, PriorityFilter} from "../types/Operation";
+import "./styles/Operations.css";
 
 
 
@@ -16,7 +18,22 @@ function Operations() {
   const [status, setStatus] = useState<Operation["status"]>("Planned");
   const [priority, setPriority] = useState<Operation["priority"]>("Low");
   const [showForm, setShowForm] = useState(false);
+  const [statusFilter, setStatusFilter] = useState<StatusFilter>("All");
+  const [priorityFilter, setPriorityFilter] = useState<PriorityFilter>("All");
   
+
+  const filteredOperations = operations.filter(operation => {
+  const statusMatches =
+    statusFilter === "All" ||
+    operation.status === statusFilter;
+
+  const priorityMatches =
+    priorityFilter === "All" ||
+    operation.priority === priorityFilter;
+
+  return statusMatches && priorityMatches;
+});
+
 // Functions
 
 // Function to add a new operation
@@ -68,10 +85,10 @@ function Operations() {
 
 
     return (
-  <section>
+  <section className="operations-page">
     <h1>Operations</h1>
 
-    <button onClick={() => setShowForm(prev => !prev)}>
+    <button className="btn btn-add" onClick={() => setShowForm(prev => !prev)}>
       {showForm ? "Close" : "Add Operation"}
     </button>
 
@@ -88,12 +105,20 @@ function Operations() {
         onSubmit={addOperation}
       />
     )}
+    {statusFilter && priorityFilter && (
+      <OperationFilter
+        status={statusFilter}
+        priority={priorityFilter}
+        filterStatus={setStatusFilter}
+        filterPriority={setPriorityFilter}
+      />
+    )}
 
-    {operations.length === 0 && (
+    {filteredOperations.length === 0 && (
       <p>No operations found</p>
     )}
 
-    {operations.map(operation => (
+    {filteredOperations.map(operation => (
       <OperationCard
         key={operation.id}
         operation={operation}

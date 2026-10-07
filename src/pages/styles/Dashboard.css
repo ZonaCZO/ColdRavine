@@ -4,6 +4,8 @@
 
 .dashboard h1 {
   margin-bottom: 32px;
+  padding: 0;
+  margin: 12px 0 74px 0;
 }
 
 .stats-grid {
