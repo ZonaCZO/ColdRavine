@@ -28,7 +28,7 @@ function Sidebar() {
       </section>
       <section id="sidebar-sections">
           {menuItems.map((item) => (
-            <NavLink key={item.name} to={`/${item.name.toLowerCase().replace(' ', '-')}`} className="{({ isActive }) => (isActive ? 'sidebar-section active' : 'sidebar-section')}">
+            <NavLink key={item.name} to={`/${item.name.toLowerCase().replace(' ', '-')}`} className={({ isActive }) => (isActive ? 'sidebar-section active' : 'sidebar-section')}>
               {item.icon} {item.name}
             </NavLink>
           ))}

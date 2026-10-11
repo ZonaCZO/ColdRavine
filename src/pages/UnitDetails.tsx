@@ -4,10 +4,13 @@ import UnitInfo from "../components/unitDetails/UnitInfo";
 import UnitPersonnel from "../components/unitDetails/UnitPersonnel";
 import UnitCommander from "../components/unitDetails/UnitCommander";
 import "./styles/UnitDetails.css";
+import { useParams } from "react-router-dom";
+import { soldiers } from "../data/soldiers";
 
 function UnitDetails() {
+  const params = useParams();
   // Temporary preview. Replace with the ID lookup during the routing lesson.
-  const unit = units[0];
+  const unit = units.find(s => s.id === Number(params.id));
 
   if (!unit) {
     return <p>No units available</p>;
@@ -20,7 +23,7 @@ function UnitDetails() {
       <UnitInfo unit={unit} />
       <div className="unit-details-sections">
         <UnitCommander />
-        <UnitPersonnel />
+        <UnitPersonnel soldiers={soldiers.filter(s => s.unit === unit.name)} />
       </div>
     </section>
   );
