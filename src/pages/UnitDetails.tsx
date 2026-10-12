@@ -13,7 +13,7 @@ function UnitDetails() {
   const unit = units.find(s => s.id === Number(params.id));
 
   if (!unit) {
-    return <p>No units available</p>;
+    return <p>Unit not found</p>;
   }
 
   return (

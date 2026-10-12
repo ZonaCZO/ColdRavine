@@ -2,7 +2,7 @@ import type { Soldier } from "../../types/Soldier";
 
 function UnitCommander({ soldier }: { soldier: Soldier | undefined}) {
 
-  if (!soldier) return (<p className="unit-details-empty">Commander data has not been added yet.</p>);
+  if (!soldier) return (<p className="unit-details-empty">No сommander assigned</p>);
   return (
     <section className="unit-details-panel" aria-labelledby="unit-commander-title">
       <h2 id="unit-commander-title">Commander</h2>

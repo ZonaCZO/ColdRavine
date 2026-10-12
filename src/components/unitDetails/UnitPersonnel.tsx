@@ -5,7 +5,7 @@ import type { Soldier } from "../../types/Soldier";
 
 
 function UnitPersonnel( { soldiers }: { soldiers: Soldier[]} ) {
-  if (soldiers.length === 0) return (<p className="unit-details-empty">Personnel list has not been connected yet.</p> )
+  if (soldiers.length === 0) return (<p className="unit-details-empty">No personnel assigned</p> )
   return (
     <section className="unit-details-panel" aria-labelledby="unit-personnel-title">
       
