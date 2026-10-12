@@ -23,7 +23,7 @@ function UnitDetails() {
       <UnitInfo unit={unit} />
       <div className="unit-details-sections">
         <UnitCommander soldier={soldiers.find(s => s.id === unit.commander)}/>
-        <UnitPersonnel soldiers={soldiers.filter(s => s.unit === unit.name)} />
+        <UnitPersonnel soldiers={soldiers.filter(s => s.unit === unit.name && s.id !== unit.commander)} />
       </div>
     </section>
   );
