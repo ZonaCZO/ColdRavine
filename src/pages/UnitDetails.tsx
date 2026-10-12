@@ -22,7 +22,7 @@ function UnitDetails() {
       <UnitHeader unit={unit} />
       <UnitInfo unit={unit} />
       <div className="unit-details-sections">
-        <UnitCommander />
+        <UnitCommander soldier={soldiers.find(s => s.id === unit.commander)}/>
         <UnitPersonnel soldiers={soldiers.filter(s => s.unit === unit.name)} />
       </div>
     </section>
