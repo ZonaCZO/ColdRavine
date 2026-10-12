@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 
 import type { Soldier } from "../../types/Soldier";
 
@@ -13,7 +14,7 @@ function UnitPersonnel( { soldiers }: { soldiers: Soldier[]} ) {
       {soldiers.map((soldier) => (
       <div key={soldier.id} className="unit-personnel-fields">
         <div className="unit-personnel-field"><span>Record ID</span><p>#{soldier.id}</p></div>
-        <div className="unit-personnel-field"><span>Name</span> <p>{soldier.name}</p></div>
+        <div className="unit-personnel-field"><span>Name</span> <p><Link style={{ color: "#7db4ff" }} to={`/personnel/${soldier.id}`}>{soldier.name}</Link></p></div>
         <div className="unit-personnel-field"><span>Rank</span><p>{soldier.rank}</p></div>
         <div className="unit-personnel-field"><span>Specialization</span><p>{soldier.specialization}</p></div>
       </div>
@@ -24,3 +25,4 @@ function UnitPersonnel( { soldiers }: { soldiers: Soldier[]} ) {
 }
 
 export default UnitPersonnel;
+
