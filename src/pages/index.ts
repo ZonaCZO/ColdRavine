@@ -7,6 +7,6 @@ export { default as Units } from "./Units";
 export { default as UnitDetails } from "./UnitDetails";
 export { default as Intelligence } from "./Intelligence";
 export { default as TacticalMap } from "./TacticalMap";
-
+export { default as Login } from "./Login";
 export { default as ReportDetails } from "./ReportDetails";
 

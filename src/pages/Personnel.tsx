@@ -1,19 +1,18 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import type { Soldier } from "../types/Soldier";
 import PersonnelCard from "../components/personnel/PersonnelCard";
 import PersonnelFilter from "../components/personnel/PersonnelFilter";
 import "./styles/Personnel.css";
 
-import { soldiers } from "../data/soldiers";
 
-
-const statuses = [...new Set(soldiers.map((soldier) => soldier.status))];
-const units = [...new Set(soldiers.map((soldier) => soldier.unit))];
 
 function Personnel() {
+  const [soldiers, setSoldiers] = useState<Soldier[]>([]);
   const [search, setSearch] = useState("");
   const [status, setStatus] = useState<Soldier["status"] | null>(null);
   const [unit, setUnit] = useState("");
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
   const query = search.trim().toLowerCase();
 
   const filteredSoldiers = soldiers.filter((soldier) =>
@@ -21,6 +20,33 @@ function Personnel() {
     (status === null || soldier.status === status) &&
     (unit === "" || soldier.unit === unit)
   );
+
+  useEffect(() => {
+    async function loadSoldiers() {
+    
+      try {
+        const response = await fetch("/api/soldiers");
+        if (!response.ok) {
+          throw new Error("Failed to load personnel");
+        }
+        const data = await response.json();
+        if (response.status === 404) {
+          return;
+        }
+        setSoldiers(data);
+      } catch {
+          setError("Failed to load personnel")
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    
+    loadSoldiers();
+  }, []);
+
+  const statuses = [...new Set(soldiers.map((soldier) => soldier.status))];
+  const units = [...new Set(soldiers.map((soldier) => soldier.unit))];
 
   function resetFilters() {
     setSearch("");
@@ -46,19 +72,21 @@ function Personnel() {
         <p className="personnel-subtitle" role="status">
           Showing {filteredSoldiers.length} of {soldiers.length} soldiers
         </p>
-        {filteredSoldiers.length > 0 ? (
-          <div className="personnel-cards personnel-directory">
-            {filteredSoldiers.map((soldier) => (
-              <PersonnelCard key={soldier.id} soldier={soldier} />
-            ))}
-          </div>
-        ) : (
+        {loading ? (
           <div className="personnel-section personnel-empty">
             <h2 className="personnel-section__title">No personnel found</h2>
             <p className="personnel-subtitle">Try another name or reset the filters.</p>
             <button type="button" className="personnel-button personnel-button--secondary" onClick={resetFilters}>
               Reset filters
             </button>
+          </div>
+        ) : error ? (
+             <p className="personnel-alert" role="alert">{error}</p>
+          ) : (
+            <div className="personnel-cards personnel-directory">
+            {filteredSoldiers.map((soldier) => (
+              <PersonnelCard key={soldier.id} soldier={soldier} />
+            ))}
           </div>
         )}
       </div>
