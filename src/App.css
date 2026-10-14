@@ -83,6 +83,10 @@
   text-align: left;
   padding: 12px 14px;
 }
+#center.center-login {
+  padding: 0;
+  min-width: 0;
+}
 
 #next-steps {
   display: flex;

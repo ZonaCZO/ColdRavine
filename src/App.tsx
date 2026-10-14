@@ -1,16 +1,20 @@
-import { Navigate, Route, Routes } from 'react-router-dom'
+import { Navigate, Route, Routes, useLocation} from 'react-router-dom'
+
 import './App.css'
 import Sidebar from './components/Sidebar'
 import { Dashboard, NotFound, Operations, Personnel, Units, Soldier, UnitDetails, Intelligence, ReportDetails, TacticalMap, Login} from "./pages/index.ts";
 
 
+
 function App() {
+  const { pathname } = useLocation();
+  const isLoginPage = pathname === "/login";
   return (
   
     <section id="app">
-      <Sidebar />
+      {!isLoginPage && <Sidebar />}
           
-      <section id="center">
+      <section id="center" className={isLoginPage ? "center-login" : ""}>
         <Routes>
             <Route path="/" element={<Navigate to="/login" replace />} />
             <Route path="*" element={<NotFound />} />

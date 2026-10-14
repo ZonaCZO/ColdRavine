@@ -42,3 +42,19 @@
   cursor: pointer;
   transition: background-color 0.3s, border-left-color 0.3s;
 }
+
+.sidebar-logout {
+  margin: 16px;
+  padding: 10px 16px;
+  border: 1px solid #65343d;
+  border-radius: 6px;
+  background: #251b22;
+  color: #fca5a5;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.sidebar-logout:disabled {
+  opacity: 0.6;
+  cursor: wait;
+}

@@ -1,20 +1,20 @@
 import { useState } from "react";
 import type { FormEvent } from "react";
 import "./styles/Login.css";
+import { useNavigate } from "react-router-dom";
 
 function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-  const [success, setSuccess] = useState(false);
+  const navigate = useNavigate();
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     if (loading) return;
     setLoading(true);
     setError("");
-    setSuccess(false);
 
     try {
       const response = await fetch("/api/auth/login", {
@@ -34,7 +34,7 @@ function Login() {
       if (!response.ok) throw new Error("Login failed");
 
       setPassword("");
-      setSuccess(true);
+      navigate("/dashboard", { replace: true });
     } catch {
       setError("Не удалось войти. Проверьте соединение и попробуйте снова.");
     } finally {
@@ -58,7 +58,6 @@ function Login() {
             value={password} onChange={(event) => setPassword(event.target.value)}
             required disabled={loading} />
           {error && <p className="login-alert" role="alert">{error}</p>}
-          {success && <p className="login-success" role="status">Вход выполнен. Можно открыть нужный раздел в меню.</p>}
           <button type="submit" disabled={loading}>{loading ? "Signing in..." : "Sign in"}</button>
         </form>
       </div>

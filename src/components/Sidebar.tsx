@@ -1,6 +1,7 @@
 
 import './Sidebar.css'
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 function Sidebar() {   
     const menuItems = [
@@ -12,6 +13,30 @@ function Sidebar() {
   { icon: '⬡', name: 'Tactical Map' },
   
 ]
+const navigate = useNavigate();
+const [loggingOut, setLoggingOut] = useState(false);
+const [logoutError, setLogoutError] = useState("");
+
+async function handleLogout() {
+  setLoggingOut(true);
+  setLogoutError("");
+
+  try {
+    const response = await fetch("/api/auth/logout", {
+      method: "POST",
+    });
+
+    if (!response.ok && response.status !== 401) {
+      throw new Error("Logout failed");
+    }
+
+    navigate("/login", { replace: true });
+  } catch {
+    setLogoutError("Не удалось выйти. Попробуйте снова.");
+  } finally {
+    setLoggingOut(false);
+  }
+}
 
     return (
     <aside id="sidebar">
@@ -33,6 +58,16 @@ function Sidebar() {
             </NavLink>
           ))}
       </section>
+      <button
+  className="sidebar-logout"
+  type="button"
+  onClick={handleLogout}
+  disabled={loggingOut}
+>
+  {loggingOut ? "Signing out..." : "Sign out"}
+</button>
+
+{logoutError && <p role="alert">{logoutError}</p>}
     </aside>
     )
 }
