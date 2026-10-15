@@ -70,7 +70,14 @@
   border: 1px solid #2f333b;
   border-radius: 10px;
   text-align: center;
+  text-decoration: none;
   transition: transform 0.2s ease, border-color 0.2s ease;
+}
+.operation-details-link {
+  text-decoration: none;
+}
+.operation-details-link:hover {
+  text-decoration: none;
 }
 .personnel-directory-card:hover { transform: translateY(-2px); border-color: #46515f; }
 .personnel-directory-card__header { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px; margin-bottom: 12px; }

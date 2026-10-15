@@ -3,7 +3,8 @@ import { Link } from "react-router-dom";
 
 function PersonnelCard({ soldier }: { soldier: Soldier }) {
   return (
-    <article className="personnel-card personnel-directory-card">
+    
+    <Link className="personnel-card personnel-directory-card" to={`/personnel/${soldier.id}`}>
       <div className="personnel-directory-card__header">
         <svg className="personnel-directory-avatar" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
           <path d="M8 1a3 3 0 1 0 0 6 3 3 0 0 0 0-6ZM6.5 8A4.5 4.5 0 0 0 2 12.5v.5a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2v-.5A4.5 4.5 0 0 0 9.5 8Z" fill="currentColor" />
@@ -30,10 +31,8 @@ function PersonnelCard({ soldier }: { soldier: Soldier }) {
           <dd className="personnel-list__value">{soldier.age}</dd>
         </div>
       </dl>
-      <Link className="personnel-button" to={`/personnel/${soldier.id}`}>
-  Open dossier
-</Link>
-    </article>
+    </Link>
+    
   );
 }
 
