@@ -1,4 +1,5 @@
 import express from "express";
+import { registerReadRoutes } from "./readRoutes.js";
 import { registerUnitRoutes } from "./unitRoutes.js";
 import session from "express-session";
 
@@ -111,6 +112,7 @@ res.json(soldiers);
 });
 
 registerUnitRoutes(app, units);
+registerReadRoutes(app);
 
 app.listen(3000, () => {
   console.log("Server: http://localhost:3000");

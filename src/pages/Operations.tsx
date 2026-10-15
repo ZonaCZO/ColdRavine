@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import OperationCard from "../components/operation/OperationCard";
 import OperationForm from "../components/operation/OperationForm";
 import OperationFilter from "../components/operation/OperationFilter";
@@ -8,12 +8,27 @@ import "./styles/Operations.css";
 
 
 function Operations() {
-    const [operations, setOperations] = useState<Operation[]>([
-      
-     { id: 1, name: "Operation Alpha", status: "In Progress", priority: "High" },
-     { id: 2, name: "Operation Bravo", status: "Completed", priority: "Low" },
-     { id: 3, name: "Operation Charlie", status: "Planned", priority: "Medium" },
-  ]);
+    const [operations, setOperations] = useState<Operation[]>([]);
+  const [serverIds, setServerIds] = useState<number[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
+  useEffect(() => {
+    let active = true;
+    async function loadOperations() {
+      try {
+        const response = await fetch("/api/operations");
+        if (!response.ok) throw new Error("Failed to load operations");
+        const data: Operation[] = await response.json();
+        if (active) { setOperations(data); setServerIds(data.map(item => item.id)); }
+      } catch {
+        if (active) setError("Failed to load operations");
+      } finally {
+        if (active) setLoading(false);
+      }
+    }
+    loadOperations();
+    return () => { active = false; };
+  }, []);
   const [name, setName] = useState("");
   const [status, setStatus] = useState<Operation["status"]>("Planned");
   const [priority, setPriority] = useState<Operation["priority"]>("Low");
@@ -32,7 +47,7 @@ function Operations() {
     priorityFilter === "All" ||
     operation.priority === priorityFilter;
 
-  const searchMatches = operation.name.toLowerCase().includes(search.toLowerCase());
+  const searchMatches = operation.name.toLowerCase().includes(search.trim().toLowerCase());
 
   return statusMatches && priorityMatches && searchMatches;
 });
@@ -90,8 +105,11 @@ function Operations() {
     return (
   <section className="operations-page">
     <h1>Operations</h1>
+    <p className="operations-note">List and details come from the server. Add, Edit and Delete are local practice changes; details show the server version. Changes reset when you leave this page.</p>
+    {loading && <p role="status">Loading operations...</p>}
+    {error && <p className="operations-alert" role="alert">{error}</p>}
 
-    <button className="btn btn-add" onClick={() => setShowForm(prev => !prev)}>
+    <button className="btn btn-add" disabled={loading || !!error} onClick={() => setShowForm(prev => !prev)}>
       {showForm ? "Close" : "Add Operation"}
     </button>
 
@@ -119,7 +137,7 @@ function Operations() {
       />
     )}
 
-    {filteredOperations.length === 0 && (
+    {!loading && !error && filteredOperations.length === 0 && (
       <p>No operations found</p>
     )}
 
@@ -127,6 +145,7 @@ function Operations() {
       <OperationCard
         key={operation.id}
         operation={operation}
+        hasServerDetails={serverIds.includes(operation.id)}
         onDelete={deleteOperation}
         onStatusChange={changeStatus}
         onPriorityChange={changePriority}

@@ -11,6 +11,7 @@ function Personnel() {
   const [search, setSearch] = useState("");
   const [status, setStatus] = useState<Soldier["status"] | null>(null);
   const [unit, setUnit] = useState("");
+  const [rank, setRank] = useState("");
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const query = search.trim().toLowerCase();
@@ -18,7 +19,8 @@ function Personnel() {
   const filteredSoldiers = soldiers.filter((soldier) =>
     soldier.name.toLowerCase().includes(query) &&
     (status === null || soldier.status === status) &&
-    (unit === "" || soldier.unit === unit)
+    (unit === "" || soldier.unit === unit) &&
+    (rank === "" || soldier.rank === rank)
   );
 
   useEffect(() => {
@@ -48,10 +50,13 @@ function Personnel() {
   const statuses = [...new Set(soldiers.map((soldier) => soldier.status))];
   const units = [...new Set(soldiers.map((soldier) => soldier.unit))];
 
+  const ranks = [...new Set(soldiers.map((soldier) => soldier.rank))];
+
   function resetFilters() {
     setSearch("");
     setStatus(null);
     setUnit("");
+    setRank("");
   }
 
   return (
@@ -66,13 +71,18 @@ function Personnel() {
             search={search} onSearchChange={setSearch}
             status={status} onStatusChange={setStatus} statuses={statuses}
             unit={unit} onUnitChange={setUnit} units={units}
+            rank={rank} onRankChange={setRank} ranks={ranks}
             onReset={resetFilters}
           />
         </header>
-        <p className="personnel-subtitle" role="status">
+        {!loading && !error && <p className="personnel-subtitle" role="status">
           Showing {filteredSoldiers.length} of {soldiers.length} soldiers
-        </p>
+        </p>}
         {loading ? (
+          <p role="status">Loading personnel...</p>
+        ) : error ? (
+          <p className="personnel-alert" role="alert">{error}</p>
+        ) : filteredSoldiers.length === 0 ? (
           <div className="personnel-section personnel-empty">
             <h2 className="personnel-section__title">No personnel found</h2>
             <p className="personnel-subtitle">Try another name or reset the filters.</p>
@@ -80,9 +90,7 @@ function Personnel() {
               Reset filters
             </button>
           </div>
-        ) : error ? (
-             <p className="personnel-alert" role="alert">{error}</p>
-          ) : (
+        ) : (
             <div className="personnel-cards personnel-directory">
             {filteredSoldiers.map((soldier) => (
               <PersonnelCard key={soldier.id} soldier={soldier} />

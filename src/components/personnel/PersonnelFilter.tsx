@@ -9,10 +9,13 @@ type PersonnelFilterProps = {
   unit: string;
   onUnitChange: (value: string) => void;
   units: string[];
+  rank: string;
+  onRankChange: (value: string) => void;
+  ranks: string[];
   onReset: () => void;
 };
 
-function PersonnelFilter({ search, onSearchChange, status, onStatusChange, statuses, unit, onUnitChange, units, onReset }: PersonnelFilterProps) {
+function PersonnelFilter({ search, onSearchChange, status, onStatusChange, statuses, unit, onUnitChange, units, rank, onRankChange, ranks, onReset }: PersonnelFilterProps) {
   return (
     <div className="personnel-section personnel-filters">
       <div className="personnel-filters__fields">
@@ -36,6 +39,13 @@ function PersonnelFilter({ search, onSearchChange, status, onStatusChange, statu
           <select value={unit} onChange={(event) => onUnitChange(event.target.value)}>
             <option value="">All units</option>
             {units.map((item) => <option key={item} value={item}>{item}</option>)}
+          </select>
+        </label>
+        <label className="personnel-filter-field">
+          <span className="personnel-info__label">Rank</span>
+          <select value={rank} onChange={(event) => onRankChange(event.target.value)}>
+            <option value="">All ranks</option>
+            {ranks.map((item) => <option key={item} value={item}>{item}</option>)}
           </select>
         </label>
         <button type="button" className="personnel-button personnel-button--secondary" onClick={onReset}>

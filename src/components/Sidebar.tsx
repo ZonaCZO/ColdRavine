@@ -3,7 +3,7 @@ import './Sidebar.css'
 import { NavLink, useNavigate } from "react-router-dom";
 import { useState } from "react";
 
-function Sidebar() {   
+function Sidebar({ onLogout }: { onLogout: () => void }) {   
     const menuItems = [
   { icon: '▣', name: 'Dashboard' },
   { icon: '♟', name: 'Personnel' },
@@ -20,6 +20,8 @@ const [logoutError, setLogoutError] = useState("");
 async function handleLogout() {
   setLoggingOut(true);
   setLogoutError("");
+  onLogout();
+  navigate("/login", { replace: true });
 
   try {
     const response = await fetch("/api/auth/logout", {

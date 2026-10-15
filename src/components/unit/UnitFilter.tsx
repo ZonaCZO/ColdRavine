@@ -5,10 +5,13 @@ type Props = {
   status: Unit["status"] | null;
   onSearchChange: (value: string) => void;
   onStatusChange: (value: Unit["status"] | null) => void;
+  specialization: string;
+  specializations: string[];
+  onSpecializationChange: (value: string) => void;
   onReset: () => void;
 };
 
-function UnitFilter({ search, status, onSearchChange, onStatusChange, onReset }: Props) {
+function UnitFilter({ search, status, onSearchChange, onStatusChange, onReset, specialization, specializations, onSpecializationChange }: Props) {
   return (
     <div className="unit-filter">
       <input type="search" aria-label="Search units by name" placeholder="Search units..."
@@ -21,6 +24,7 @@ function UnitFilter({ search, status, onSearchChange, onStatusChange, onReset }:
         <option value="Active">Active</option>
         <option value="Reserve">Reserve</option>
       </select>
+      <select aria-label="Filter units by specialization" value={specialization} onChange={event => onSpecializationChange(event.target.value)}><option value="">All specializations</option>{specializations.map(item => <option key={item}>{item}</option>)}</select>
       <button type="button" className="units-button" onClick={onReset}>Reset filters</button>
     </div>
   );

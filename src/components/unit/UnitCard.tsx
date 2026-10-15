@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import type { Unit } from "../../types/Unit";
 
-function UnitCard({ unit }: { unit: Unit }) {
+function UnitCard({ unit, personnelCount }: { unit: Unit; personnelCount: number }) {
   return (
     <Link className="unit-card" to={`/units/${unit.id}`}>
       <svg className="unit-emblem" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
@@ -11,6 +11,7 @@ function UnitCard({ unit }: { unit: Unit }) {
       <h2>{unit.name}</h2>
       <span className={`unit-status unit-status--${unit.status.toLowerCase()}`}>{unit.status}</span>
       <p>{unit.specialization}</p>
+      <p>Personnel: {personnelCount}</p>
     </Link>
   );
 }

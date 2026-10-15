@@ -1,9 +1,10 @@
 import { useState } from "react";
 import type { FormEvent } from "react";
+import type { User } from "../types/User";
 import "./styles/Login.css";
 import { useNavigate } from "react-router-dom";
 
-function Login() {
+function Login({ onLogin }: { onLogin: (user: User) => void }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
@@ -32,6 +33,16 @@ function Login() {
         return;
       }
       if (!response.ok) throw new Error("Login failed");
+
+      const meResponse = await fetch("/api/auth/me");
+
+      if (!meResponse.ok) {
+        throw new Error("Failed to check session");
+      }
+
+      const currentUser: User = await meResponse.json();
+      onLogin(currentUser);
+
 
       setPassword("");
       navigate("/dashboard", { replace: true });

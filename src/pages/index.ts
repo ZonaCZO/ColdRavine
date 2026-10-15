@@ -10,3 +10,5 @@ export { default as TacticalMap } from "./TacticalMap";
 export { default as Login } from "./Login";
 export { default as ReportDetails } from "./ReportDetails";
 
+
+export { default as OperationDetails } from "./OperationDetails";

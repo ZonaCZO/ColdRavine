@@ -69,7 +69,7 @@ function UnitDetails() {
       ) : (
         <>
           <UnitHeader unit={unit} />
-          <UnitInfo unit={unit} />
+          <UnitInfo unit={unit} personnelCount={soldiers.filter(soldier => soldier.unit === unit.name).length} />
           <div className="unit-details-sections">
             <UnitCommander soldier={commander} />
             <UnitPersonnel soldiers={members} />

@@ -15,6 +15,7 @@ function ActiveOperations({ operations }: Props) {
     <section className="dashboard-panel">
       <h2>Active Operations</h2>
 
+      {operations.length === 0 && <p>No active operations</p>}
       {operations.map((operation, index) => (
         <div key={index} className="operation-card">
           <h3>{operation.title}</h3>

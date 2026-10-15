@@ -1,9 +1,11 @@
+import { Link } from "react-router-dom";
 import { useState } from "react";
 import type { Operation } from "../../types/Operation";
 
 
 type Props = {
   operation: Operation;
+  hasServerDetails: boolean;
   onDelete: (id: number) => void;
   onStatusChange: (
     id: number,
@@ -17,6 +19,7 @@ type Props = {
 
 function OperationCard({
   operation,
+  hasServerDetails,
   onDelete,
   onStatusChange,
   onPriorityChange
@@ -30,6 +33,7 @@ function OperationCard({
 
       <p>Status: {operation.status}</p>
       <p>Priority: {operation.priority}</p>
+      {hasServerDetails && <Link className="operation-details-link" to={`/operations/${operation.id}`}>Open server details</Link>}
 
       <button className="btn btn-edit" onClick={() => setEditing(prev => !prev)}>
         {editing ? "Close" : "Edit"}

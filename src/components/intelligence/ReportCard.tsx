@@ -7,6 +7,7 @@ function ReportCard({ report }: { report: IntelligenceReport }) {
       <span className="module-tag">{report.type}</span>
       <h2>{report.title}</h2>
       <p>{report.location}</p>
+      <p>{report.author} · <time dateTime={report.date}>{report.date}</time></p>
       <p>Threat: {report.threat}</p>
       <span className="module-link">Open report →</span>
     </Link>
