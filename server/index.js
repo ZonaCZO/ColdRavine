@@ -1,4 +1,5 @@
 import express from "express";
+import { verifyPassword } from "./password.js";
 import { registerReadRoutes } from "./readRoutes.js";
 import { registerUnitRoutes } from "./unitRoutes.js";
 import session from "express-session";
@@ -34,9 +35,12 @@ const units = [
 ];
 
 const users = [
-  { id: 1, username: "Pidor", password: "1488" }
-]
-
+  {
+    "id": 1,
+    "username": "Pidor",
+    "passwordHash": "scrypt$88e9d5839b0542307995d1623b0ddc13$8f92e2e252975499f0b7e71414a3f81f54ad92d3079b4d2bd52c01821ba1d787c8e2f0d5354f2a7de6d81ccf4df47dc9485f84f7168bbb4b3bc52b6d7f6fb25f"
+  }
+];
 function requireAuth(req, res, next) {
   const user = users.find((user) => user.id === req.session.userId);
 
@@ -49,24 +53,31 @@ function requireAuth(req, res, next) {
 
 
 
-app.post("/api/auth/login", (req, res) => {
-  const { username, password } = req.body;
-  
-  
+app.post("/api/auth/login", async (req, res) => {
+  const { username, password } = req.body ?? {};
 
-  if (!username || !password){
-    return res.status(400).json({message: "Username and password are required"});
+  if (typeof username !== "string" || typeof password !== "string" || !username.trim() || !password) {
+    return res.status(400).json({ message: "Username and password are required" });
   }
 
-  const user = users.find(u => u.username === username && u.password === password);
+  try {
+    const user = users.find(item => item.username === username.trim());
+    // Verify a real hash even for an unknown username.
+    const passwordMatches = await verifyPassword(password, user?.passwordHash ?? users[0].passwordHash);
 
-  if (!user){
-    return res.status(401).json({message: "Access denided. Incorrect login or password"});
+    if (!user || !passwordMatches) {
+      return res.status(401).json({ message: "Incorrect login or password" });
+    }
+
+    // Replace the guest session before recording the authenticated user.
+    req.session.regenerate((error) => {
+      if (error) return res.status(500).json({ message: "Failed to log in" });
+      req.session.userId = user.id;
+      res.json({ message: "Credentials accepted" });
+    });
+  } catch {
+    res.status(500).json({ message: "Failed to log in" });
   }
-  req.session.userId = user.id;
-  
-
-  res.json({message: "Credentials accepted"});
 });
 
 app.get("/api/auth/me", (req, res) => {
