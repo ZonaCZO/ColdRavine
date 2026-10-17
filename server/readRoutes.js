@@ -1,3 +1,4 @@
+import { requireStaff } from "./access.js";
 import { pool } from "./db.js";
 
 const reportSelect = `
@@ -9,7 +10,7 @@ const reportSelect = `
 `;
 
 export function registerReadRoutes(app) {
-  app.get("/api/operations", async (req, res) => {
+  app.get("/api/operations", requireStaff, async (req, res) => {
     try {
       const result = await pool.query(
         "SELECT id, name, status, priority FROM public.operations WHERE army_id = $1 ORDER BY id",
@@ -21,7 +22,7 @@ export function registerReadRoutes(app) {
     }
   });
 
-  app.get("/api/operations/:id", async (req, res) => {
+  app.get("/api/operations/:id", requireStaff, async (req, res) => {
     const id = Number(req.params.id);
     if (!Number.isInteger(id) || id < 1 || id > 2147483647) {
       return res.status(404).json({ message: "Operation not found" });
@@ -38,7 +39,7 @@ export function registerReadRoutes(app) {
     }
   });
 
-  app.get("/api/intelligence", async (req, res) => {
+  app.get("/api/intelligence", requireStaff, async (req, res) => {
     try {
       const result = await pool.query(`${reportSelect} WHERE r.army_id = $1 ORDER BY r.id`, [req.user.armyId]);
       res.json(result.rows);
@@ -47,7 +48,7 @@ export function registerReadRoutes(app) {
     }
   });
 
-  app.get("/api/intelligence/:id", async (req, res) => {
+  app.get("/api/intelligence/:id", requireStaff, async (req, res) => {
     const id = Number(req.params.id);
     if (!Number.isInteger(id) || id < 1 || id > 2147483647) {
       return res.status(404).json({ message: "Report not found" });
@@ -61,3 +62,4 @@ export function registerReadRoutes(app) {
     }
   });
 }
+

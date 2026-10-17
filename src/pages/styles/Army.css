@@ -1,0 +1,19 @@
+.army-page { display:flex; flex-direction:column; gap:20px; padding:28px 24px; color:#a3b0c2; text-align:left; }
+.army-page * { box-sizing:border-box; }
+.army-page h1 { margin:0; color:#f3f4f6; font-size:clamp(28px,5vw,44px); line-height:1.2; }
+.army-page h2 { color:#f3f4f6; margin:0 0 16px; font-size:22px; }
+.army-panel { min-width:0; padding:24px; background:#1b1e24; border:1px solid #2f333b; border-radius:10px; }
+.army-form { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:16px; align-items:end; margin:16px 0; }
+.army-page label { display:flex; flex-direction:column; gap:6px; font-size:13px; }
+.army-page :is(input,select,button) { min-width:0; max-width:100%; padding:10px 12px; background:#11161c; color:#dbe4ee; border:1px solid #35404d; border-radius:6px; font:inherit; font-size:14px; }
+.army-page button { color:#5eead4; border-color:#2dd4bf; cursor:pointer; }
+.army-page :disabled { opacity:.6; cursor:wait; }
+.army-page :is(input,select,button):focus-visible { outline:2px solid #4b8cff; outline-offset:3px; }
+.army-error { margin:12px 0; padding:12px; border:1px solid #65343d; border-left:3px solid #ef4444; background:#251b22; color:#fca5a5; border-radius:8px; }
+.army-result { padding:16px; border:1px solid #2dd4bf; border-radius:8px; overflow-wrap:anywhere; }
+.army-account { padding:20px 0; border-top:1px solid #2f333b; margin-top:20px; }
+.army-account h3 { color:#f3f4f6; overflow-wrap:anywhere; }
+.army-account select { margin-bottom:12px; }
+.army-account fieldset { margin:12px 0; border:1px solid #35404d; border-radius:8px; padding:16px; }
+.army-page .army-checkbox { flex-direction:row; align-items:center; gap:10px; margin:8px 0; overflow-wrap:anywhere; }
+@media(max-width:640px) { .army-page { padding:20px 12px; } .army-form { grid-template-columns:1fr; } .army-panel { padding:16px; } }

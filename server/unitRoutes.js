@@ -1,9 +1,10 @@
+import { requireStaff } from "./access.js";
 import { pool } from "./db.js";
 
 const unitColumns = "id, name, specialization, status, commander_id AS commander";
 
 export function registerUnitRoutes(app) {
-  app.get("/api/units", async (req, res) => {
+  app.get("/api/units", requireStaff, async (req, res) => {
     try {
       const result = await pool.query(
         `SELECT ${unitColumns} FROM public.units WHERE army_id = $1 ORDER BY id`,
@@ -15,7 +16,7 @@ export function registerUnitRoutes(app) {
     }
   });
 
-  app.get("/api/units/:id", async (req, res) => {
+  app.get("/api/units/:id", requireStaff, async (req, res) => {
     const id = Number(req.params.id);
     if (!Number.isInteger(id) || id < 1 || id > 2147483647) {
       return res.status(404).json({ message: "Unit not found" });
@@ -32,3 +33,4 @@ export function registerUnitRoutes(app) {
     }
   });
 }
+

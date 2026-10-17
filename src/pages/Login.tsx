@@ -2,7 +2,7 @@ import { useState } from "react";
 import type { FormEvent } from "react";
 import type { User } from "../types/User";
 import "./styles/Login.css";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function Login({ onLogin }: { onLogin: (user: User) => void }) {
   const [username, setUsername] = useState("");
@@ -45,7 +45,7 @@ function Login({ onLogin }: { onLogin: (user: User) => void }) {
 
 
       setPassword("");
-      navigate("/dashboard", { replace: true });
+      navigate(currentUser.mustChangePassword ? "/change-password" : currentUser.role === "soldier" ? `/personnel/${currentUser.soldierId}` : "/dashboard", { replace: true });
     } catch {
       setError("Не удалось войти. Проверьте соединение и попробуйте снова.");
     } finally {
@@ -71,9 +71,11 @@ function Login({ onLogin }: { onLogin: (user: User) => void }) {
           {error && <p className="login-alert" role="alert">{error}</p>}
           <button type="submit" disabled={loading}>{loading ? "Signing in..." : "Sign in"}</button>
         </form>
+        <Link className="auth-link" to="/register">Create a new army</Link>
       </div>
     </section>
   );
 }
 
 export default Login;
+

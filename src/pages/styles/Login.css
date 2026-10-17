@@ -14,3 +14,6 @@
 .login-alert { background: #251b22; border: 1px solid #65343d; color: #fca5a5; }
 .login-success { background: #142924; border: 1px solid #27594c; color: #5eead4; }
 @media (max-width: 480px) { .login-panel { padding: 20px; } }
+
+.auth-link { display: inline-block; margin-top: 20px; color: #7db4ff; text-decoration: none; font-size: 14px; }
+.auth-link:focus-visible { outline: 2px solid #4b8cff; outline-offset: 3px; }
