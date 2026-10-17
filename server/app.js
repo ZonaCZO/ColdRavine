@@ -49,7 +49,7 @@ export async function createApp() {
   await registerAuthRoutes(app);
   app.use('/api',requireAuth,requireChangedPassword);
   const selectSoldier = `SELECT s.id,s.name,s.rank,COALESCE(u.name,'Unassigned') AS unit,
-    s.unit_id AS "unitId",s.status,s.specialization,s.age
+    s.unit_id AS "unitId",s.status,s.specialization,s.age,s.bio
     FROM public.soldiers s LEFT JOIN public.units u ON u.id=s.unit_id AND u.army_id=s.army_id`;
   app.get('/api/soldiers',route(async (req,res) => {
     const values = [req.user.armyId];

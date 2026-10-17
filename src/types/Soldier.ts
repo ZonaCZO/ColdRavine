@@ -7,4 +7,5 @@ export type Soldier = {
   status: "Active" | "Wounded" | "Reserve";
   specialization: string;
   age: number;
+  bio?: string;
 };

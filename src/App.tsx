@@ -1,6 +1,6 @@
 import { useEffect,useState } from 'react';
 import type { ReactNode } from 'react';
-import { Navigate,Route,Routes,useLocation } from 'react-router-dom';
+import { Link,Navigate,Route,Routes,useLocation } from 'react-router-dom';
 import type { User } from './types/User';
 import Sidebar from './components/Sidebar';
 import { Dashboard,NotFound,Operations,Personnel,Units,Soldier,UnitDetails,Intelligence,ReportDetails,TacticalMap,Login,OperationDetails } from './pages/index';
@@ -36,6 +36,7 @@ function App(){
   return <section id="app">
     {user&&!authPage&&<Sidebar user={user} onLogout={()=>setUser(null)}/>}
     <section id="center" className={authPage?'center-login':''}>
+      {user&&!authPage&&<header className="app-profile-bar"><Link to={user.mustChangePassword?'/change-password':'/profile'}>My profile · {user.username}</Link></header>}
       <Routes>
         <Route path="/" element={<Navigate to={user?home:'/login'} replace/>}/>
         <Route path="/login" element={user?<Navigate to={home} replace/>:<Login onLogin={setUser}/>}/>
@@ -44,7 +45,8 @@ function App(){
         <Route path="/dashboard" element={protect(<Dashboard/>,true)}/>
         <Route path="/army" element={protect(user?<ArmyManagement user={user}/>:null,true)}/>
         <Route path="/personnel" element={protect(user?.role==='soldier'?<Navigate to={home} replace/>:<Personnel/>)}/>
-        <Route path="/personnel/:id" element={protect(<Soldier/>)}/>
+        <Route path="/profile" element={protect(<Soldier user={user??undefined} ownProfile/>)}/>
+        <Route path="/personnel/:id" element={protect(<Soldier user={user??undefined}/>)}/>
         <Route path="/units" element={protect(<Units/>,true)}/>
         <Route path="/units/:id" element={protect(<UnitDetails/>,true)}/>
         <Route path="/operations" element={protect(<Operations/>,true)}/>

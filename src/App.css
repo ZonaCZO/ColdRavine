@@ -201,3 +201,8 @@
     border-right-color: var(--border);
   }
 }
+.app-profile-bar { display:flex; justify-content:flex-end; margin-bottom:20px; }
+.app-profile-bar a { color:#5eead4; border:1px solid #35404d; border-radius:8px; padding:10px 16px; text-decoration:none; overflow-wrap:anywhere; }
+.app-profile-bar a:hover { background:#1b1e24; border-color:#2dd4bf; }
+.app-profile-bar a:focus-visible { outline:2px solid #5eead4; outline-offset:3px; }
+#center { min-width:0; }

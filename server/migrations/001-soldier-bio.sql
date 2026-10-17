@@ -1,0 +1,1 @@
+ALTER TABLE public.soldiers ADD COLUMN IF NOT EXISTS bio varchar(500) NOT NULL DEFAULT '';

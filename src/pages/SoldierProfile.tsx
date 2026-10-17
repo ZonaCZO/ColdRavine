@@ -6,12 +6,15 @@ import SoldierActivity from "../components/soldierProfile/SoldierActivity";
 import "./styles/SoldierProfile.css";
 import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
+import type { User } from '../types/User';
+import SoldierBio from '../components/soldierProfile/SoldierBio';
 
 // Temporary preview. Replace with the shared array lookup during the useParams lesson.
 
 
-function SoldierProfile() {
-  const {id} = useParams();
+function SoldierProfile({user,ownProfile=false}:{user?:User;ownProfile?:boolean}) {
+  const params = useParams();
+  const id = ownProfile ? String(user?.soldierId) : params.id;
   const [soldier, setSoldier] = useState<Soldier | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -53,7 +56,7 @@ function SoldierProfile() {
     ) : !soldier ?(
       <p>Soldier not found</p>
     ) : (
-      <><SoldierHeader soldier={soldier} /><SoldierInfo soldier={soldier} /><div className="soldier-profile-sections">
+      <><SoldierHeader soldier={soldier} /><SoldierInfo soldier={soldier} /><SoldierBio key={soldier.id} bio={soldier.bio??''} editable={user?.soldierId===soldier.id}/><div className="soldier-profile-sections">
               <SoldierServiceRecord />
               <SoldierActivity />
             </div></>

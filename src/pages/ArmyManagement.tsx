@@ -5,14 +5,12 @@ import type { Unit } from '../types/Unit';
 import type { Soldier } from '../types/Soldier';
 import CreateSoldier from '../components/army/CreateSoldier';
 import CreateUnit from '../components/army/CreateUnit';
-import AccessEditor from '../components/army/AccessEditor';
-import type { ManagedUser } from '../components/army/AccessEditor';
+import AccountList from '../components/army/AccountList';
 import EditSoldier from '../components/army/EditSoldier';
 import './styles/Army.css';
 
 function ArmyManagement({user}:{user:User}){
   const [units,setUnits]=useState<Unit[]>([]);const [soldiers,setSoldiers]=useState<Soldier[]>([]);
-  const [accounts,setAccounts]=useState<ManagedUser[]>([]);const [permissions,setPermissions]=useState<string[]>([]);
   const [loading,setLoading]=useState(true);const [error,setError]=useState('');const [notice,setNotice]=useState('');const [revision,setRevision]=useState(0);
   const [selectedSoldier,setSelectedSoldier]=useState('');const [selectedUnit,setSelectedUnit]=useState('');
   const [commanderUnit,setCommanderUnit]=useState('');const [commanderSoldier,setCommanderSoldier]=useState('');
@@ -25,9 +23,7 @@ function ArmyManagement({user}:{user:User}){
       try{
         const u=await fetch('/api/units');if(!u.ok)throw new Error('Unable to load units');const unitData:Unit[]=await u.json();
         const s=await fetch('/api/soldiers');if(!s.ok)throw new Error('Unable to load personnel');const soldierData:Soldier[]=await s.json();
-        let accountData:{users:ManagedUser[];permissions:string[]}={users:[],permissions:[]};
-        if(user.role==='owner'){const a=await fetch('/api/admin/users');if(!a.ok)throw new Error('Unable to load accounts');accountData=await a.json();}
-        if(active){setUnits(unitData);setSoldiers(soldierData);setAccounts(accountData.users);setPermissions(accountData.permissions);setError('');}
+        if(active){setUnits(unitData);setSoldiers(soldierData);setError('');}
       }catch(error){if(active)setError(error instanceof Error?error.message:'Load failed');}finally{if(active)setLoading(false);}
     }
     load();return()=>{active=false;};
@@ -52,7 +48,7 @@ function ArmyManagement({user}:{user:User}){
         <label>Unit<select required value={commanderUnit} onChange={e=>{setCommanderUnit(e.target.value);setCommanderSoldier('');}} disabled={saving}><option value="">Select unit</option>{units.map(unit=><option key={unit.id} value={unit.id}>{unit.name}</option>)}</select></label>
         <label>Commander<select value={commanderSoldier} onChange={e=>setCommanderSoldier(e.target.value)} disabled={saving}><option value="">No commander</option>{soldiers.filter(soldier=>soldier.unitId===Number(commanderUnit)).map(soldier=><option key={soldier.id} value={soldier.id}>{soldier.name}</option>)}</select></label><button disabled={saving}>Save commander</button>
       </form></section>}
-      {user.role==='owner'&&<section className="army-panel"><h2>Accounts and officer permissions</h2><p>Ranks do not grant access. Only the owner can change roles and permissions.</p>{accounts.map(account=><AccessEditor key={`${account.id}-${revision}`} account={account} permissions={permissions} onSaved={()=>{setNotice('Access saved');refresh();}}/>)}</section>}
+      {user.role==='owner'&&<AccountList key={revision}/>}
       {user.role==='officer'&&!user.permissions.length&&<p>No management permissions assigned. Contact your army owner.</p>}
     </>}
   </section>;

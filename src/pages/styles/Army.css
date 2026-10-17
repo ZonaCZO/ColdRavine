@@ -17,3 +17,4 @@
 .army-account fieldset { margin:12px 0; border:1px solid #35404d; border-radius:8px; padding:16px; }
 .army-page .army-checkbox { flex-direction:row; align-items:center; gap:10px; margin:8px 0; overflow-wrap:anywhere; }
 @media(max-width:640px) { .army-page { padding:20px 12px; } .army-form { grid-template-columns:1fr; } .army-panel { padding:16px; } }
+.account-pagination { display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap; margin-top:24px; }

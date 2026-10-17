@@ -25,3 +25,12 @@
 .soldier-profile-sections > section { min-width: 0; }
 .soldier-profile-empty { padding: 16px; border: 1px dashed #35404d; border-radius: 8px; background: #171c23; font-size: 14px; text-align: left; }
 @media (max-width: 800px) { .soldier-profile-sections { grid-template-columns: 1fr; } }
+.soldier-bio { padding:24px; border:1px solid #2f333b; border-radius:10px; background:#1b1e24; text-align:left; }
+.soldier-bio h2 { margin-top:0; color:#f3f4f6; }
+.soldier-bio label { display:block; margin-bottom:8px; }
+.soldier-bio textarea { display:block; width:100%; resize:vertical; padding:12px; border:1px solid #35404d; border-radius:8px; background:#11161c; color:#dbe4ee; font:inherit; }
+.soldier-bio textarea:focus-visible, .soldier-bio button:focus-visible { outline:2px solid #5eead4; outline-offset:3px; }
+.bio-actions { display:flex; align-items:center; justify-content:space-between; gap:12px; margin-top:12px; }
+.soldier-bio button { padding:10px 16px; border:1px solid #2dd4bf; border-radius:6px; background:#11161c; color:#5eead4; cursor:pointer; }
+.soldier-bio button:disabled { opacity:.5; cursor:default; }
+.bio-text { white-space:pre-wrap; overflow-wrap:anywhere; }

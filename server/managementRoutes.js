@@ -4,6 +4,13 @@ import { pool } from "./db.js";
 import { ApiError, route, requireOwner, requirePermission, transaction, text, id, age, choice, ownUnit, permissionNames } from "./access.js";
 
 export function registerManagementRoutes(app) {
+  app.post('/api/profile/bio', route(async (req,res) => {
+    const bio = req.body?.bio;
+    if (typeof bio !== 'string' || bio.length > 500) throw new ApiError(400,'Bio must be at most 500 characters');
+    const result = await pool.query('UPDATE public.soldiers SET bio=$1 WHERE army_id=$2 AND id=$3 RETURNING bio', [bio.trim(),req.user.armyId,req.user.soldierId]);
+    if (!result.rows[0]) throw new ApiError(404,'Soldier not found');
+    res.json(result.rows[0]);
+  }));
   app.post('/api/soldiers/:id/profile', requirePermission('soldiers.edit'), route(async (req,res) => {
     const soldierId=id(Number(req.params.id));
     const body=req.body??{};
@@ -82,11 +89,22 @@ export function registerManagementRoutes(app) {
   }));
 
   app.get('/api/admin/users', requireOwner, route(async (req,res) => {
+    const page = Number(req.query.page ?? 1);
+    if (!Number.isSafeInteger(page) || page < 1 || page > 1000000) throw new ApiError(400,'Invalid page');
+    const search = typeof req.query.search === 'string' ? req.query.search.trim() : '';
+    if (search.length > 120) throw new ApiError(400,'Search is too long');
+    const sorts = {name:'s.name',username:'u.username',role:'u.role',newest:'u.id DESC'};
+    const sortKey = req.query.sort ?? 'name';
+    if (typeof sortKey !== 'string' || !Object.hasOwn(sorts,sortKey)) throw new ApiError(400,'Invalid sort');
+    const sort = sorts[sortKey];
+    const values = [req.user.armyId,search];
+    const filter = `u.army_id=$1 AND ($2='' OR strpos(lower(s.name),lower($2))>0 OR strpos(lower(u.username),lower($2))>0)`;
+    const count = await pool.query(`SELECT count(*)::int AS total FROM public.users u JOIN public.soldiers s ON s.id=u.soldier_id AND s.army_id=u.army_id WHERE ${filter}`,values);
     const result = await pool.query(`SELECT u.id,u.username,u.role,u.soldier_id AS "soldierId",s.name,
       ARRAY(SELECT permission FROM public.user_permissions WHERE user_id=u.id ORDER BY permission) AS permissions
       FROM public.users u JOIN public.soldiers s ON s.id=u.soldier_id AND s.army_id=u.army_id
-      WHERE u.army_id=$1 ORDER BY u.id`, [req.user.armyId]);
-    res.json({ users:result.rows, permissions:permissionNames });
+      WHERE ${filter} ORDER BY ${sort},u.id LIMIT 10 OFFSET $3`, [...values,(page-1)*10]);
+    res.json({ users:result.rows, permissions:permissionNames,total:count.rows[0].total,page,pageSize:10 });
   }));
 
   app.post('/api/admin/users/:id/access', requireOwner, route(async (req,res) => {
