@@ -15,6 +15,8 @@ dist-ssr
 # Editor directories and files
 .vscode/*
 server/.env
+server/.env.cloud
+*.backup
 !.vscode/extensions.json
 .idea
 .DS_Store
@@ -23,3 +25,6 @@ server/.env
 *.njsproj
 *.sln
 *.sw?
+
+# Local Netlify folder
+.netlify

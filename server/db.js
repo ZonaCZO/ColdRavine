@@ -2,8 +2,12 @@ import pg from "pg";
 
 const { Pool } = pg;
 
-// PGHOST, PGPORT, PGDATABASE, PGUSER and PGPASSWORD come from server/.env.
+// Local PG* variables remain supported; cloud deployments use DATABASE_URL.
 export const pool = new Pool({
+  ...(process.env.DATABASE_URL ? { connectionString: process.env.DATABASE_URL } : {}),
+  max: 3,
+  idleTimeoutMillis: 10000,
+  allowExitOnIdle: true,
   connectionTimeoutMillis: 5000,
   query_timeout: 10000,
 });

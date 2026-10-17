@@ -1,5 +1,6 @@
 import express from "express";
 import session from "express-session";
+import connectPgSimple from "connect-pg-simple";
 import { randomBytes } from "node:crypto";
 import { pool } from "./db.js";
 import { registerAuthRoutes } from "./authRoutes.js";
@@ -10,16 +11,27 @@ import { requireAuth, requireChangedPassword, ApiError, route } from "./access.j
 
 export async function createApp() {
   const app = express();
+  const deployed = process.env.NETLIFY === 'true' || process.env.NODE_ENV === 'production';
+  if (deployed && !process.env.SESSION_SECRET) throw new Error('SESSION_SECRET is required');
+  if (deployed) app.set('trust proxy', 1);
   app.use(express.json({ limit: '32kb' }));
+  await pool.query(`CREATE TABLE IF NOT EXISTS public.sessions (
+    sid varchar PRIMARY KEY, sess json NOT NULL, expire timestamp(6) NOT NULL
+  )`);
+  await pool.query('CREATE INDEX IF NOT EXISTS sessions_expire_idx ON public.sessions (expire)');
+  await pool.query('DELETE FROM public.sessions WHERE expire < NOW()');
+  const PgStore = connectPgSimple(session);
   app.use(session({
+    store: new PgStore({ pool, tableName: 'sessions', pruneSessionInterval: false }),
     secret: process.env.SESSION_SECRET || randomBytes(32).toString('hex'),
     resave: false, saveUninitialized: false,
-    cookie: { httpOnly:true, secure:false, sameSite:'lax' },
+    cookie: { httpOnly:true, secure:deployed, sameSite:'lax' },
   }));
   // Vite may rewrite Host while preserving the browser's Origin header.
-  const frontendOrigins = new Set(process.env.APP_ORIGIN
-    ? [new URL(process.env.APP_ORIGIN).origin]
-    : ['http://localhost:5173', 'http://127.0.0.1:5173']);
+  const frontendOrigins = new Set([
+    process.env.APP_ORIGIN, process.env.URL, process.env.DEPLOY_PRIME_URL,
+    ...(!deployed ? ['http://localhost:5173', 'http://127.0.0.1:5173'] : []),
+  ].filter(Boolean).map(value => new URL(value).origin));
   app.use((req,res,next) => {
     const origin = req.get('origin');
     if (origin && !['GET','HEAD','OPTIONS'].includes(req.method)) {
