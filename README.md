@@ -1,103 +1,102 @@
 # ColdRavine
 
-Учебное веб-приложение для управления условными подразделениями, личным составом, операциями и разведывательными отчётами. Проект помогает освоить разработку интерфейсов на React и TypeScript, работу с маршрутизацией, формами и связанными данными, а затем — интеграцию с backend.
+An educational web application for managing fictional units, personnel, operations, and intelligence reports. The project helps you learn interface development with React and TypeScript, routing, forms, and related data, followed by backend integration.
 
-Приложение развивается поэтапно: frontend, REST API на Express и учебный вход через сессии уже подключены частично; PostgreSQL, полноценные права и развёртывание впереди. Оно предназначено для учебных сценариев и демонстрационных данных.
+The application is being developed in stages: the frontend, Express REST API, and basic session-based login are already partially connected; PostgreSQL, full access control, and deployment are planned. It is intended for learning scenarios and demonstration data.
 
+## Technologies
 
-## Технологии
-
-| Технология | Назначение | Статус |
+| Technology | Purpose | Status |
 | --- | --- | --- |
-| React | Компоненты и пользовательский интерфейс | Текущий стек |
-| TypeScript | Типизация компонентов, данных и функций | Текущий стек |
-| Vite | Среда разработки и сборка frontend | Текущий стек |
-| React Router | Навигация между страницами | Текущий стек |
-| CSS | Стили, оформление и адаптивная вёрстка | Текущий стек |
-| Git / GitHub | Контроль версий и хранение репозитория | Текущий набор инструментов |
+| React | Components and user interface | Current stack |
+| TypeScript | Type definitions for components, data, and functions | Current stack |
+| Vite | Frontend development environment and build tool | Current stack |
+| React Router | Navigation between pages | Current stack |
+| CSS | Styling, visual design, and responsive layouts | Current stack |
+| Git / GitHub | Version control and repository hosting | Current toolset |
 
-Точные версии зависимостей следует смотреть в `package.json` и lock-файле репозитория.
+For exact dependency versions, refer to `package.json` and the repository’s lockfile.
 
-## Текущий статус
+## Current Status
 
-| Область | Состояние |
+| Area | Status |
 | --- | --- |
-| Dashboard | Frontend реализован |
-| Operations | Frontend реализован |
-| Personnel | Список и профиль через API готовы; расширение досье впереди |
-| Units | Список, детали, состав и командир через API готовы |
-| Intelligence | Скелет списка и Report Details с демонстрационными данными |
-| Tactical Map | Скелет страницы; карта ещё не подключена |
-| NotFound | Подключён к маршруту * |
-| Backend и REST API | Express на JavaScript, GET солдат/юнитов, учебный POST, массивы в памяти |
-| PostgreSQL | Запланирован |
-| Аутентификация и права доступа | Вход/выход, сессии и защита API готовы; проверка сессии в React и роли впереди |
-| Deploy | Запланирован |
+| Dashboard | Frontend implemented |
+| Operations | Frontend implemented |
+| Personnel | API-based list and profile completed; expanded dossier features planned |
+| Units | API-based list, details, personnel, and commander completed |
+| Intelligence | List and Report Details scaffolds with demonstration data |
+| Tactical Map | Page scaffold; map not connected yet |
+| NotFound | Connected to the `*` route |
+| Backend and REST API | Express with JavaScript, GET endpoints for soldiers/units, a practice POST endpoint, and in-memory arrays |
+| PostgreSQL | Planned |
+| Authentication and access control | Login/logout, sessions, and API protection completed; React session checks and roles planned |
+| Deployment | Planned |
 
-Статус отражает описание проекта. Реализация frontend не означает наличие серверного хранения, готового API или завершённость всех CRUD-сценариев.
+This status reflects the project description. An implemented frontend does not imply persistent server-side storage, a complete API, or support for all CRUD workflows.
 
-## Страницы и маршруты
+## Pages and Routes
 
-| Модуль | Маршрут | Назначение |
+| Module | Route | Purpose |
 | --- | --- | --- |
-| Dashboard | `/dashboard` | Сводная статистика, активные операции, последние события и состояние системы |
-| Operations | `/operations` | Список операций, поиск, фильтрация и управление операциями |
-| Operation Details | `/operations/:id` | Информация о выбранной операции и назначенных подразделениях |
-| Personnel | `/personnel` | Список личного состава, поиск и фильтры |
-| Soldier Dossier | `/personnel/:id` | Досье: основные сведения, звание, подразделение, статус и история службы |
-| Units | `/units` | Список подразделений, поиск, фильтры и управление подразделениями |
-| Unit Details | `/units/:id` | Командир, состав, статус, назначенные операции и активность |
-| Intelligence | `/intelligence` | Разведывательные отчёты, поиск, фильтры и уровни угроз |
-| Report Details | `/intelligence/:id` | Содержание отчёта, связанные объекты и материалы |
-| Tactical Map | `/map` | Демонстрационная карта с маркерами объектов и панелью выбранного объекта |
-| NotFound | `*` | Страница для неизвестных адресов |
+| Dashboard | `/dashboard` | Summary statistics, active operations, recent events, and system status |
+| Operations | `/operations` | Operation list, search, filtering, and management |
+| Operation Details | `/operations/:id` | Information about the selected operation and assigned units |
+| Personnel | `/personnel` | Personnel list, search, and filters |
+| Soldier Dossier | `/personnel/:id` | Dossier: basic information, rank, unit, status, and service history |
+| Units | `/units` | Unit list, search, filters, and management |
+| Unit Details | `/units/:id` | Commander, personnel, status, assigned operations, and activity |
+| Intelligence | `/intelligence` | Intelligence reports, search, filters, and threat levels |
+| Report Details | `/intelligence/:id` | Report content, related entities, and materials |
+| Tactical Map | `/map` | Demonstration map with entity markers and a selected entity panel |
+| NotFound | `*` | Page for unknown URLs |
 
-Это целевая схема маршрутов. Страницы деталей и возможности запланированных модулей могут появляться постепенно. Сейчас `/` перенаправляет на `/login`. Страница входа использует маршрут `/login`.
+This is the intended route structure. Detail pages and planned module features may be introduced gradually. Currently, `/` redirects to `/login`. The login page uses the `/login` route.
 
-## Предполагаемая архитектура
+## Proposed Architecture
 
-Frontend строится вокруг отдельных предметных модулей и переиспользуемых компонентов:
+The frontend is organized around individual domain modules and reusable components:
 
 ```text
-Браузер
+Browser
   └─ React + React Router
-      ├─ Страницы и компоненты модулей
-      ├─ Состояние интерфейса и проверка форм
-      └─ Слой доступа к данным
-          ├─ Демонстрационные данные — на этапе frontend
-          └─ REST API — после подключения backend
+      ├─ Module pages and components
+      ├─ UI state and form validation
+      └─ Data access layer
+          ├─ Demonstration data — during frontend development
+          └─ REST API — after backend integration
               └─ Express + TypeScript
-                  ├─ Маршруты и middleware
-                  ├─ Проверка входных данных и авторизация
-                  ├─ Сервисы предметной логики
-                  └─ Слой доступа к PostgreSQL
+                  ├─ Routes and middleware
+                  ├─ Input validation and authorization
+                  ├─ Domain logic services
+                  └─ PostgreSQL data access layer
 ```
 
-- **Страницы** организуют экран, загрузку данных и взаимодействие компонентов.
-- **Компоненты** отображают карточки, формы, фильтры и общие элементы интерфейса.
-- **Типы** описывают сущности и контракты данных.
-- **Слой API** изолирует сетевые запросы от интерфейса.
-- **Backend** проверяет запросы, применяет права доступа и сохраняет данные.
+- **Pages** organize screens, data loading, and component interactions.
+- **Components** display cards, forms, filters, and shared interface elements.
+- **Types** describe entities and data contracts.
+- **The API layer** separates network requests from the interface.
+- **The backend** validates requests, applies access permissions, and stores data.
 
-На первом этапе достаточно локального состояния React и передачи данных через props. Общий механизм состояния стоит добавлять по мере появления данных, используемых несколькими страницами. Dashboard должен получать сводные показатели из тех же источников, что и остальные модули.
+Local React state and passing data through props are sufficient at the first stage. Shared state management should be introduced as data used by multiple pages emerges. Dashboard should obtain summary metrics from the same sources as the other modules.
 
-## Рекомендуемая структура папок
+## Recommended Folder Structure
 
-Ниже приведена предполагаемая структура, а не подтверждённое дерево текущего репозитория:
+The following is a proposed structure, not a verified representation of the current repository:
 
 ```text
 military-command-system/
-├─ public/                       # Статические файлы
+├─ public/                       # Static files
 ├─ src/
-│  ├─ assets/                    # Изображения и другие ресурсы
+│  ├─ assets/                    # Images and other assets
 │  ├─ components/
-│  │  ├─ common/                 # Кнопки, модальные окна, empty state
-│  │  ├─ layout/                 # Общая оболочка, sidebar, header
-│  │  ├─ operations/             # Карточки, формы и фильтры операций
-│  │  ├─ personnel/              # Компоненты личного состава
-│  │  ├─ units/                  # Компоненты подразделений
-│  │  ├─ intelligence/           # Компоненты отчётов
-│  │  └─ map/                    # Компоненты карты
+│  │  ├─ common/                 # Buttons, modals, empty states
+│  │  ├─ layout/                 # Shared layout, sidebar, header
+│  │  ├─ operations/             # Operation cards, forms, and filters
+│  │  ├─ personnel/              # Personnel components
+│  │  ├─ units/                  # Unit components
+│  │  ├─ intelligence/           # Report components
+│  │  └─ map/                    # Map components
 │  ├─ pages/
 │  │  ├─ Dashboard.tsx
 │  │  ├─ Operations.tsx
@@ -110,63 +109,63 @@ military-command-system/
 │  │  ├─ ReportDetails.tsx
 │  │  ├─ TacticalMap.tsx
 │  │  └─ NotFound.tsx
-│  ├─ routes/                    # Конфигурация маршрутов
-│  ├─ types/                     # Типы предметных сущностей
-│  ├─ data/                      # Демонстрационные данные
-│  ├─ services/                  # Будущий клиент REST API
-│  ├─ hooks/                     # Переиспользуемые React hooks
-│  ├─ utils/                     # Вспомогательные функции
-│  ├─ styles/                    # Общие стили и стили модулей
+│  ├─ routes/                    # Route configuration
+│  ├─ types/                     # Domain entity types
+│  ├─ data/                      # Demonstration data
+│  ├─ services/                  # Future REST API client
+│  ├─ hooks/                     # Reusable React hooks
+│  ├─ utils/                     # Utility functions
+│  ├─ styles/                    # Shared and module styles
 │  ├─ App.tsx
 │  └─ main.tsx
 ├─ index.html
 ├─ package.json
-├─ package-lock.json             # При использовании npm
+├─ package-lock.json             # When using npm
 ├─ tsconfig.json
 ├─ vite.config.ts
 └─ README.md
 ```
 
-Backend можно разместить в отдельном репозитории или добавить каталог `server/`. Решение о монорепозитории пока не зафиксировано.
+The backend can be placed in a separate repository or added under a `server/` directory. A decision on using a monorepo has not yet been finalized.
 
-## Данные и сущности
+## Data and Entities
 
-Предлагаемая модель данных:
+Proposed data model:
 
-| Сущность | Основные поля | Связи |
+| Entity | Main Fields | Relationships |
 | --- | --- | --- |
-| Operation | `id`, `name`, `description`, `status`, даты | Назначенные подразделения, связанные отчёты |
-| Soldier | `id`, `name`, `rank`, `status`, `unitId` | Подразделение, записи истории службы |
-| Unit | `id`, `name`, `type`, `status`, `commanderId` | Личный состав, командир, операции |
-| IntelligenceReport | `id`, `title`, `content`, `threatLevel`, `createdAt` | Операция, автор, вложения |
-| MapMarker | `id`, `coordinates`, `entityType`, `entityId` | Объект, отображаемый на карте |
-| ActivityEvent | `id`, `eventType`, `entityId`, `createdAt` | История изменений объектов |
-| User | `id`, `displayName`, `role` | Будущая аутентификация и права доступа |
+| Operation | `id`, `name`, `description`, `status`, dates | Assigned units, related reports |
+| Soldier | `id`, `name`, `rank`, `status`, `unitId` | Unit, service history records |
+| Unit | `id`, `name`, `type`, `status`, `commanderId` | Personnel, commander, operations |
+| IntelligenceReport | `id`, `title`, `content`, `threatLevel`, `createdAt` | Operation, author, attachments |
+| MapMarker | `id`, `coordinates`, `entityType`, `entityId` | Entity displayed on the map |
+| ActivityEvent | `id`, `eventType`, `entityId`, `createdAt` | Entity change history |
+| User | `id`, `displayName`, `role` | Future authentication and access control |
 
-Названия и поля предварительные; окончательные типы и схема базы данных будут уточняться при реализации.
+Names and fields are preliminary. Final types and the database schema will be refined during implementation.
 
-Предполагаемые правила связей:
+Proposed relationship rules:
 
-- Один военнослужащий относится к одному подразделению либо временно не назначен.
-- Подразделение содержит несколько военнослужащих; командир задаётся ссылкой на запись личного состава.
-- Операция может включать несколько подразделений. Историю назначений можно хранить через отдельную сущность `OperationUnit`.
-- Численность подразделения рассчитывается по составу, чтобы избежать расхождений с вручную сохранённым значением.
-- Маркер карты ссылается на сущность и не дублирует её основные сведения.
-- Dashboard показывает вычисляемые показатели, а не отдельные копии данных модулей.
+- A soldier belongs to one unit or is temporarily unassigned.
+- A unit contains multiple soldiers; its commander is specified by a reference to a personnel record.
+- An operation can involve multiple units. Assignment history can be stored through a separate `OperationUnit` entity.
+- Unit strength is calculated from its personnel to avoid discrepancies with a manually stored value.
+- A map marker references an entity without duplicating its main information.
+- Dashboard displays calculated metrics rather than separate copies of module data.
 
-Для разработки следует использовать вымышленные данные. После подключения backend постоянным источником данных станет PostgreSQL.
+Use fictional data during development. After backend integration, PostgreSQL will become the persistent data source.
 
-## Локальный запуск
+## Running Locally
 
-### Требования
+### Requirements
 
-- Node.js версии, совместимой с установленной версией Vite; предпочтительно поддерживаемый LTS-релиз.
-- npm и Git.
-- Доступ к репозиторию проекта.
+- A Node.js version compatible with the installed Vite version, preferably a supported LTS release.
+- npm and Git.
+- Access to the project repository.
 
-### Установка и запуск
+### Installation and Startup
 
-Замените URL ниже адресом своего репозитория:
+Replace the URL below with your repository URL:
 
 ```bash
 git clone <repository-url>
@@ -175,116 +174,115 @@ npm install
 npm run dev
 ```
 
-Откройте адрес, который выведет Vite в терминале. Обычно это `http://localhost:5173`, но порт может отличаться.
+Open the address printed by Vite in the terminal. It is usually `http://localhost:5173`, but the port may differ.
 
-Если в репозитории есть актуальный `package-lock.json`, для воспроизводимой установки можно использовать `npm ci` вместо `npm install`.
+If the repository contains an up-to-date `package-lock.json`, you can use `npm ci` instead of `npm install` for reproducible installation.
 
-### Сборка и просмотр
+### Build and Preview
 
 ```bash
 npm run build
 npm run preview
 ```
 
-Команды предполагают стандартные scripts Vite в `package.json`. Перед использованием проверьте их наличие. `preview` предназначен для локального просмотра сборки.
+These commands assume standard Vite scripts in `package.json`. Check that they exist before using them. `preview` is intended for viewing the build locally.
 
-При будущем подключении API можно добавить `.env.local`:
+When connecting the API in the future, you can add an `.env.local` file:
 
 ```dotenv
 VITE_API_BASE_URL=http://localhost:3000/api
 ```
 
-Это предполагаемая настройка: она заработает после реализации клиента API. Переменные `VITE_*` доступны в браузере, поэтому в них нельзя хранить пароли, приватные ключи и другие секреты. Пример настроек без секретов можно сохранить в `.env.example`.
+This is a proposed configuration: it will work after the API client is implemented. `VITE_*` variables are accessible in the browser, so they must not contain passwords, private keys, or other secrets. A configuration example without secrets can be saved in `.env.example`.
 
-## Git workflow
+## Git Workflow
 
-Рекомендуемый процесс работы:
+Recommended workflow:
 
-1. Обновить локальную ветку `main`.
-2. Создать отдельную ветку для одной задачи.
-3. Внести изменения и проверить затронутые сценарии интерфейса.
-4. Проверить сборку и доступные проверки проекта.
-5. Создать понятные коммиты, отправить ветку и открыть Pull Request.
-6. После проверки объединить изменения в `main`.
+1. Update your local `main` branch.
+2. Create a separate branch for one task.
+3. Make changes and check the affected UI workflows.
+4. Run the build and available project checks.
+5. Create clear commits, push the branch, and open a Pull Request.
+6. After review, merge the changes into `main`.
 
 ```bash
 git switch main
 git pull --ff-only
 git switch -c feat/units-page
 
-# После внесения и проверки изменений:
+# After making and checking changes:
 git add src/
 git commit -m "feat: add units page"
 git push -u origin feat/units-page
 ```
 
-Примеры названий веток: `feat/personnel-page`, `fix/operation-filter`, `docs/update-readme`. Для сообщений коммитов можно использовать префиксы `feat:`, `fix:`, `refactor:`, `docs:`.
+Example branch names: `feat/personnel-page`, `fix/operation-filter`, `docs/update-readme`. Commit messages can use prefixes such as `feat:`, `fix:`, `refactor:`, and `docs:`.
 
-Перед коммитом проверяйте список изменений. Не добавляйте `node_modules/`, `dist/`, локальные `.env` с секретами и служебные файлы редактора; правила исключения должны находиться в `.gitignore`.
+Review the list of changes before committing. Do not add `node_modules/`, `dist/`, local `.env` files containing secrets, or editor-specific files. Exclusion rules should be defined in `.gitignore`.
 
 ## Roadmap
 
-### Этап 1 — Frontend
+### Stage 1 — Frontend
 
-- [x] Реализовать frontend Dashboard.
-- [x] Реализовать frontend Operations.
-- [x] Базовый Personnel и профиль солдата; расширенные разделы досье впереди.
-- [x] Базовые Units и страница подразделения с составом и командиром.
-- [x] Подготовить скелеты Intelligence и Report Details.
-- [ ] Реализовать полноценные данные, поиск и фильтры Intelligence.
-- [x] Подготовить скелет Tactical Map.
-- [ ] Подключить карту, маркеры и слои.
-- [ ] Завершить маршруты деталей и NotFound.
-- [ ] Унифицировать формы, фильтры, поиск и состояния пустых списков.
-- [ ] Проверить адаптивность, клавиатурную навигацию и доступность форм.
+- [x] Implement the Dashboard frontend.
+- [x] Implement the Operations frontend.
+- [x] Implement basic Personnel and soldier profiles; expanded dossier sections are planned.
+- [x] Implement basic Units and a unit page with personnel and commander information.
+- [x] Prepare Intelligence and Report Details scaffolds.
+- [ ] Implement complete Intelligence data, search, and filters.
+- [x] Prepare the Tactical Map scaffold.
+- [ ] Connect the map, markers, and layers.
+- [ ] Complete detail routes and NotFound.
+- [ ] Standardize forms, filters, search, and empty-list states.
+- [ ] Check responsiveness, keyboard navigation, and form accessibility.
 
-### Этап 2 — Backend и данные
+### Stage 2 — Backend and Data
 
-- [x] Создать учебный сервер на Node.js + Express (JavaScript).
-- [ ] При необходимости перенести backend на TypeScript.
-- [ ] Спроектировать PostgreSQL, связи и миграции.
-- [x] GET API для Personnel и Units.
-- [ ] API Operations/Intelligence и операции изменения данных с правами доступа.
-- [ ] Добавить серверную проверку данных и единый формат ошибок.
-- [x] Подключить Personnel, SoldierProfile, Units и UnitDetails к API с загрузкой и ошибками.
-- [ ] Подключить остальные модули к API.
-- [ ] Добавить проверки ключевых сценариев и интеграции API.
+- [x] Create a practice server with Node.js + Express (JavaScript).
+- [ ] Migrate the backend to TypeScript if needed.
+- [ ] Design PostgreSQL tables, relationships, and migrations.
+- [x] Implement GET APIs for Personnel and Units.
+- [ ] Implement Operations/Intelligence APIs and data modification endpoints with access control.
+- [ ] Add server-side data validation and a consistent error format.
+- [x] Connect Personnel, SoldierProfile, Units, and UnitDetails to the API with loading and error states.
+- [ ] Connect the remaining modules to the API.
+- [ ] Add tests for key workflows and API integration.
 
-### Этап 3 — Доступ и публикация
+### Stage 3 — Access and Deployment
 
-- [x] Учебный вход/выход, GET me, сессии в памяти и cookie.
-- [x] Форма Login, переход на Dashboard, кнопка выхода и защита API.
-- [ ] Текущий шаг: проверка me при открытии React и защита страниц.
-- [ ] Хеширование паролей и завершение модели доступа.
-- [ ] Определить роли и проверять права доступа на сервере.
-- [ ] Настроить окружения разработки и production.
-- [ ] Настроить автоматические проверки и сборку в GitHub.
-- [ ] Развернуть frontend, backend и базу данных.
-- [ ] Настроить журналирование и резервное копирование базы данных.
-- [ ] Настроить шифрование и хеширование.
+- [x] Implement basic login/logout, GET me, in-memory sessions, and cookies.
+- [x] Implement the Login form, navigation to Dashboard, logout button, and API protection.
+- [ ] Current step: check me when React starts and protect pages.
+- [ ] Implement password hashing and complete the access model.
+- [ ] Define roles and enforce access permissions on the server.
+- [ ] Configure development and production environments.
+- [ ] Configure automated checks and builds in GitHub.
+- [ ] Deploy the frontend, backend, and database.
+- [ ] Configure logging and database backups.
+- [ ] Configure encryption and hashing.
 
-## Backend: текущее и планируемое
+## Backend: Current and Planned
 
-| Технология | Планируемое назначение |
+| Technology | Intended Purpose |
 | --- | --- |
-| Node.js | Выполнение серверного приложения |
-| Express | HTTP-маршруты, middleware и REST API |
-| TypeScript | Типизация серверного кода |
-| PostgreSQL | Постоянное хранение данных и связей |
+| Node.js | Running the server application |
+| Express | HTTP routes, middleware, and REST API |
+| TypeScript | Server-side type checking |
+| PostgreSQL | Persistent storage of data and relationships |
 
-Реализованы `/api/soldiers`, `/api/units` и `/api/auth/login`, `/api/auth/me`, `/api/auth/logout`. `/api/operations` и `/api/intelligence` запланированы. Контракты запросов, пагинация, фильтрация, ORM или SQL-клиент будут выбраны позже. Текущий вход использует express-session; разделение армий и разрешения ещё не реализованы.
+The `/api/soldiers`, `/api/units`, `/api/auth/login`, `/api/auth/me`, and `/api/auth/logout` endpoints are implemented. `/api/operations` and `/api/intelligence` are planned. Request contracts, pagination, filtering, and an ORM or SQL client will be selected later. The current login implementation uses express-session; army isolation and permissions have not yet been implemented.
 
-Секреты подключения к базе и настройки аутентификации должны храниться в серверном окружении. Доступ к PostgreSQL выполняется через backend.
+Database credentials and authentication settings must be stored in the server environment. PostgreSQL is accessed through the backend.
 
-## Возможный desktop вариант
+## Possible Desktop Version
 
-В будущем веб-интерфейс можно адаптировать для desktop-приложения с помощью **Electron** или **Tauri**. Выбор потребует оценки размера приложения, интеграции с системой, обновлений и способа подключения к API. Tauri также потребует работы с Rust-инструментами.
+In the future, the web interface could be adapted into a desktop application using **Electron** or **Tauri**. The choice will require evaluating application size, system integration, updates, and API connectivity. Tauri will also require working with Rust tooling.
 
-Electron и Tauri сейчас не входят в стек проекта. Desktop-версия рассматривается как отдельный будущий вариант развития после стабилизации веб-приложения.
+Electron and Tauri are not currently part of the project stack. A desktop version is considered a separate future direction after the web application has stabilized.
 
-## Лицензия
+## License
 
-**TODO: выбрать лицензию и добавить файл `LICENSE`.**
+**TODO: choose a license and add a `LICENSE` file.**
 
-Лицензия пока не определена. После выбора укажите её название и условия использования в этом разделе.
-
+The license has not yet been determined. Once selected, specify its name and terms of use in this section.
