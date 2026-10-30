@@ -1,6 +1,6 @@
 # ColdRavine
 
-An educational web application for managing fictional units, personnel, operations, and intelligence reports. The project helps you learn interface development with React and TypeScript, routing, forms, and related data, followed by backend integration.
+An educational (for learning) web application for managing fictional units, personnel, operations, and intelligence reports. The project helps you learn interface development with React and TypeScript, routing, forms, and related data, followed by backend integration.
 
 The application is being developed in stages: the frontend, Express REST API, and basic session-based login are already partially connected; PostgreSQL, full access control, and deployment are planned. It is intended for learning scenarios and demonstration data.
 
