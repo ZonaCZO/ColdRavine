@@ -262,6 +262,23 @@ Review the list of changes before committing. Do not add `node_modules/`, `dist/
 - [ ] Configure logging and database backups.
 - [ ] Configure encryption and hashing.
 
+
+### Stage 4 — Junior Fullstack React/Node.js preparation
+
+Planned learning; the completed project milestones above remain unchanged. Track progress in [PROJECT_CHECKLIST.md](PROJECT_CHECKLIST.md) and follow the practical exercises in [APPLICATION_PLAN.md](APPLICATION_PLAN.md#подготовка-junior-fullstack-reactnodejs).
+
+- [ ] Jest + React Testing Library: unit, component, and API integration tests.
+- [ ] MongoDB: documents, CRUD, indexes, and a separate ActivityEvent exercise; keep PostgreSQL as the primary database.
+- [ ] Password security: bcrypt/salt practice and comparison with the existing scrypt implementation; API validation, session/cookie security, CSRF, rate limiting, and authorization tests.
+- [ ] Docker + Compose: reproducible frontend, API, and PostgreSQL environment.
+- [ ] Redux Toolkit + Redux Saga: shared state, async requests, cancellation, and tests.
+- [ ] Hapi: a small standalone API exercise alongside Express.
+- [ ] Node.js Event Loop and Express middleware: async execution, request flow, authorization, and errors.
+- [ ] Then learn the basics of Kubernetes, Nginx, Redis, RabbitMQ, Elasticsearch, and Ramda through separate project exercises.
+- [ ] In parallel: technical English, a project presentation, and weekly mock interviews.
+
+These are learning goals, not claims that the tools are already installed or implemented.
+
 ## Backend: Current and Planned
 
 | Technology | Intended Purpose |
@@ -286,3 +303,4 @@ Electron and Tauri are not currently part of the project stack. A desktop versio
 **TODO: choose a license and add a `LICENSE` file.**
 
 The license has not yet been determined. Once selected, specify its name and terms of use in this section.
+
